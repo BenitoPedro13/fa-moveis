@@ -118,7 +118,8 @@ part of it that costs her money until it makes her money.
 | **2 — Care** | Monthly product updates, seasonal promos, photos, analytics report | Small monthly (optional) | Recurring revenue |
 | **3 — Loja online** | Shopify + Hydrogen, real checkout, Pix/cartão | Shopify plan + fees | The upsell |
 
-Hosting for phases 0–2 is **Vercel free tier**. `[VERIFY: current Hobby-tier limits and
+Hosting for phases 0–2 is **Vercel free tier**. Phase 0 is live at
+**`https://fa-moveis.vercel.app`** (project `fa-moveis`). `[VERIFY: current Hobby-tier limits and
 whether a client-owned commercial site is permitted under Vercel's Fair Use — if not, the
 Pro seat is yours, not hers, or move to Cloudflare Pages.]`
 
@@ -461,6 +462,13 @@ Resolve before the pitch where marked, before launch otherwise.
    live, that is the social link and a photo source.
 7. `[VERIFY: domain availability — famoveis.com.br, faemoveis.com.br]` at registro.br.
 8. `[VERIFY: Vercel Hobby Fair Use for a client site]` — see §3.
+9. `[VERIFY: will her factory ship direct to the end customer?]` — blocks the phase-3 pitch as
+   written. The commercial argument for §3's phase 3 is that she can sell stock she has not
+   bought, with the factory shipping to the buyer. Nothing in the Facebook capture establishes
+   that her supplier offers this, so the client deck states it conditionally ("se a sua fábrica
+   aceita mandar direto pro cliente") rather than as available. Ask the supplier before phase 3
+   is quoted; if the answer is no, phase 3 keeps checkout but reverts to her holding stock, and
+   the inventory argument disappears.
 
 ---
 

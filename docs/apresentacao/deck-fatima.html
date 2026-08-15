@@ -1,0 +1,896 @@
+<title>F&amp;A Móveis no Ar</title>
+<style>
+/* ============================================================================
+   Tokens — spec-design.md §4, verbatim. This deck inherits her design system;
+   nothing here is a new brand decision.
+   Single committed light world on purpose: the deck is shown next to the live
+   site, which has one visual world. Every colour and the body ground are painted
+   explicitly so the page holds on any host theme.
+   ========================================================================== */
+:root{
+  --papel:#F7F0EE;
+  --jacaranda:#2B1F22;
+  --rosa:#A87C7C;
+  --rosa-forte:#8E5F62;
+  --rosa-claro:#C09090;
+  --imbuia:#6B4A34;
+  --tinta-suave:#6B5B5D;
+  --zap:#25D366;
+
+  --gap:8px;
+  --radius:4px;
+  --slide-pad:clamp(24px,5vw,72px);
+  --measure:62ch;
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:var(--papel);
+  color:var(--jacaranda);
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:clamp(1rem,0.55vw + 0.88rem,1.0625rem);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+
+/* ---------- Type scale — spec-design.md §5.1 ---------- */
+.display{
+  font-family:"Bodoni Moda",Georgia,serif;
+  font-size:clamp(2.5rem,6.4vw,4.5rem);
+  line-height:1.02;
+  letter-spacing:-0.02em;
+  font-weight:400;
+  text-wrap:balance;
+  margin:0;
+}
+.h1{
+  font-family:"Bodoni Moda",Georgia,serif;
+  font-size:clamp(1.95rem,4.4vw,3.15rem);
+  line-height:1.08;
+  letter-spacing:-0.015em;
+  font-weight:400;
+  text-wrap:balance;
+  margin:0;
+}
+.h2{
+  font-family:"Bodoni Moda",Georgia,serif;
+  font-size:clamp(1.45rem,2.9vw,2.2rem);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  font-weight:400;
+  text-wrap:balance;
+  margin:0;
+}
+.h3{
+  font-size:1.125rem;
+  font-weight:500;
+  line-height:1.3;
+  margin:0;
+}
+.eyebrow{
+  font-size:0.6875rem;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.18em;
+  color:var(--rosa-forte);
+  margin:0;
+}
+.lede{
+  font-size:clamp(1.0625rem,1.1vw + 0.85rem,1.3rem);
+  line-height:1.55;
+  color:var(--tinta-suave);
+  max-width:min(var(--measure),100%);
+  margin:0;
+  text-wrap:pretty;
+}
+p{margin:0;max-width:min(var(--measure),100%);text-wrap:pretty;overflow-wrap:break-word;}
+strong{font-weight:500;color:var(--jacaranda);}
+
+/* Every number on this site is Plex Mono — spec-design.md §5.2. Non-negotiable. */
+.num{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0.04em;
+  white-space:nowrap;      /* a measurement never breaks across lines */
+}
+
+/* ---------- Slides ---------- */
+.deck{
+  scroll-snap-type:y mandatory;
+  overflow-y:auto;
+  height:100dvh;
+}
+.slide{
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  min-height:100dvh;
+  padding:var(--slide-pad);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:clamp(20px,3vh,40px);
+  position:relative;
+  background:var(--papel);
+  color:var(--jacaranda);
+  overflow-x:hidden;      /* no slide may scroll the page sideways */
+}
+.slide__inner{
+  width:100%;
+  max-width:1080px;
+  min-width:0;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:clamp(18px,2.6vh,32px);
+}
+
+/* Dark slides — composition, not a theme. spec-design.md §4.2 (70/20/10). */
+.slide--escuro{
+  background:var(--jacaranda);
+  color:var(--papel);
+}
+.slide--escuro .eyebrow{color:var(--rosa-claro);}
+.slide--escuro .lede{color:var(--rosa-claro);}
+.slide--escuro strong{color:var(--papel);}
+.slide--escuro .regua__linha,
+.slide--escuro .regua__tick{background:var(--rosa-claro);}
+.slide--escuro .regua__valor{color:var(--rosa-claro);background:var(--jacaranda);}
+.slide--escuro .cartao{border-color:rgba(192,144,144,.42);background:rgba(247,240,238,.045);}
+.slide--escuro .cartao__rotulo{color:var(--rosa-claro);}
+.slide--escuro .contador{color:var(--rosa-claro);}
+.slide--escuro .marca__texto{color:var(--papel);}
+
+/* ---------- A régua — spec-design.md §6.1.
+   Binding rule: it must carry a real number. Every instance below does. ------ */
+.regua{
+  display:flex;
+  align-items:center;
+  width:100%;
+  height:16px;
+  gap:0;
+}
+.regua__tick{width:1px;height:9px;background:var(--rosa);flex:none;}
+.regua__linha{flex:1;height:1px;background:var(--rosa);}
+.regua__valor{
+  padding:0 14px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:0.8125rem;
+  letter-spacing:0.08em;
+  color:var(--rosa-forte);
+  background:var(--papel);
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  text-transform:uppercase;
+}
+
+/* ---------- Slide counter, itself a régua carrying a real number ---------- */
+.contador{
+  position:absolute;
+  top:calc(var(--slide-pad) * 0.62);
+  right:var(--slide-pad);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:0.75rem;
+  letter-spacing:0.12em;
+  color:var(--rosa-forte);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---------- Grids ---------- */
+.grade{display:grid;gap:clamp(14px,2vw,22px);}
+.grade--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));}
+.grade--3{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));}
+
+.cartao{
+  border:1px solid rgba(168,124,124,.4);
+  border-radius:var(--radius);
+  padding:clamp(16px,2.2vw,24px);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:transparent;
+}
+.cartao__rotulo{
+  font-size:0.6875rem;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.18em;
+  color:var(--rosa-forte);
+}
+.cartao p{font-size:0.95rem;max-width:100%;}
+.cartao--destaque{border-color:var(--rosa);border-width:1px;box-shadow:inset 0 0 0 1px rgba(168,124,124,.18);}
+
+/* ---------- Marca / badge (spec-design.md §13 proportions) ---------- */
+.marca{display:flex;align-items:center;gap:18px;}
+.badge{
+  width:76px;height:76px;flex:none;
+  border-radius:50%;
+  border:1px solid var(--rosa);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;
+  position:relative;
+  color:var(--rosa-forte);
+}
+.badge::before{
+  content:"";position:absolute;inset:5px;border-radius:50%;
+  border:1px solid rgba(168,124,124,.5);
+}
+.badge__fa{font-family:"Bodoni Moda",Georgia,serif;font-size:1.32rem;letter-spacing:.08em;line-height:1;}
+.badge__mv{font-size:.42rem;letter-spacing:.26em;line-height:1;}
+.badge__casa{width:9px;height:8px;margin-top:2px;}
+.marca__texto{
+  font-family:"Bodoni Moda",Georgia,serif;
+  font-size:clamp(1.15rem,2vw,1.5rem);
+  letter-spacing:.16em;
+  line-height:1.1;
+  color:var(--jacaranda);
+}
+
+/* ---------- The measurement frame — spec-design.md §6.3.
+   The site's single orchestrated motion moment, reused here exactly once. ---- */
+.moldura{
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto;
+  gap:10px;
+  align-items:stretch;
+  max-width:430px;
+  width:100%;
+}
+.moldura__caixa{
+  border:1px solid var(--rosa);
+  border-radius:var(--radius);
+  aspect-ratio:24/23;           /* the Roupeiro Mônaco's real 240 × 230 ratio */
+  display:flex;align-items:center;justify-content:center;
+  padding:22px;
+  background:var(--papel);
+}
+.moldura__nome{
+  font-family:"Bodoni Moda",Georgia,serif;
+  font-size:clamp(1.1rem,2.2vw,1.6rem);
+  color:var(--jacaranda);
+  text-align:center;
+  line-height:1.15;
+}
+.regua--v{
+  flex-direction:column;
+  width:16px;height:auto;
+}
+.regua--v .regua__tick{width:9px;height:1px;}
+.regua--v .regua__linha{width:1px;height:auto;flex:1;}
+.regua--v .regua__valor{
+  padding:14px 0;
+  writing-mode:vertical-rl;
+}
+.moldura__prof{
+  grid-column:1 / -1;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:0.8125rem;
+  color:var(--rosa-forte);
+  letter-spacing:0.04em;
+}
+
+/* Draw-in, once, on the frame slide only */
+@media (prefers-reduced-motion:no-preference){
+  .anima .moldura__caixa{
+    animation:aparece .5s ease-out both;
+  }
+  .anima .regua--h-anim .regua__linha{transform-origin:left center;animation:tracaX .6s .18s ease-out both;}
+  .anima .regua--v-anim .regua__linha{transform-origin:bottom center;animation:tracaY .6s .18s ease-out both;}
+  .anima .regua--h-anim .regua__valor,
+  .anima .regua--v-anim .regua__valor,
+  .anima .moldura__prof{animation:sobe .45s .72s ease-out both;}
+  .anima .regua--h-anim .regua__tick,
+  .anima .regua--v-anim .regua__tick{animation:aparece .3s .16s ease-out both;}
+}
+@keyframes tracaX{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@keyframes tracaY{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+@keyframes sobe{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+@keyframes aparece{from{opacity:0;}to{opacity:1;}}
+
+/* ---------- WhatsApp message reproduction ---------- */
+.zap-bolha{
+  border:1px solid rgba(168,124,124,.4);
+  border-radius:var(--radius);
+  padding:clamp(16px,2.2vw,22px);
+  background:rgba(255,255,255,.5);
+  font-size:0.98rem;
+  line-height:1.62;
+  max-width:min(100%,460px);
+  white-space:pre-line;
+}
+.zap-bolha b{font-weight:600;}
+.zap-bolha .link{color:var(--rosa-forte);word-break:break-all;}
+.zap-botao{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--zap);
+  color:var(--jacaranda);            /* §4.1 — dark on green, 8.01:1. Never white. */
+  border-radius:var(--radius);
+  padding:13px 22px;
+  font-weight:500;
+  min-height:44px;
+  text-decoration:none;
+  width:fit-content;
+}
+.zap-botao svg{width:19px;height:19px;fill:var(--jacaranda);flex:none;}
+
+/* ---------- QR ---------- */
+.qr-bloco{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(20px,3vw,36px);}
+.qr{
+  width:clamp(148px,20vw,190px);height:auto;
+  border:1px solid var(--rosa);
+  border-radius:var(--radius);
+  padding:11px;
+  background:var(--papel);
+  flex:none;
+}
+.qr rect{fill:var(--papel);}
+.qr path{fill:var(--jacaranda);}
+
+/* ---------- Fases (the ladder) ---------- */
+.fases{display:flex;flex-direction:column;gap:0;width:100%;}
+.fase{
+  min-width:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) minmax(0,clamp(150px,19vw,238px));
+  gap:clamp(12px,2vw,26px);
+  align-items:baseline;
+  padding:clamp(11px,1.5vh,17px) 0;
+  border-top:1px solid rgba(168,124,124,.4);
+}
+.fase:last-child{border-bottom:1px solid rgba(168,124,124,.4);}
+.fase__n{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:0.8125rem;color:var(--rosa-forte);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;
+}
+.fase__nome{font-weight:500;font-size:1.02rem;}
+.fase__desc{color:var(--tinta-suave);font-size:0.9rem;margin-top:2px;max-width:min(52ch,100%);}
+.fase__custo{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:clamp(1rem,1.5vw,1.22rem);
+  color:var(--jacaranda);
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.fase__custo small{
+  display:block;font-size:0.68rem;line-height:1.42;color:var(--tinta-suave);
+  letter-spacing:0;margin-top:4px;white-space:normal;
+  font-family:"DM Sans",system-ui,sans-serif;   /* prose, not a number — mono was wrong here */
+  font-variant-numeric:normal;
+}
+.fase--agora{background:rgba(168,124,124,.07);}
+.fase--agora .fase__custo{color:var(--rosa-forte);}
+
+/* ---------- Listas ---------- */
+.lista{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;}
+.lista li{display:flex;gap:12px;align-items:flex-start;font-size:0.97rem;max-width:min(var(--measure),100%);}
+.lista li::before{
+  content:"";flex:none;width:13px;height:1px;background:var(--rosa);margin-top:.72em;
+}
+.slide--escuro .lista li::before{background:var(--rosa-claro);}
+
+.pedido li::before{
+  content:"";width:13px;height:13px;border:1px solid var(--rosa);border-radius:2px;
+  background:transparent;margin-top:.32em;
+}
+
+/* ---------- Chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:9px;}
+.chip{
+  border:1px solid rgba(168,124,124,.55);
+  border-radius:var(--radius);
+  padding:6px 13px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:0.78rem;
+  letter-spacing:.05em;
+  color:var(--rosa-forte);
+  font-variant-numeric:tabular-nums;
+}
+.slide--escuro .chip{border-color:rgba(192,144,144,.5);color:var(--rosa-claro);}
+
+.nota{
+  font-size:0.875rem;
+  color:var(--tinta-suave);
+  border-left:1px solid var(--rosa);
+  padding-left:14px;
+  max-width:min(58ch,100%);
+}
+.slide--escuro .nota{color:var(--rosa-claro);border-left-color:var(--rosa-claro);}
+
+.citacao{
+  font-family:"Bodoni Moda",Georgia,serif;
+  font-size:clamp(1.15rem,2.1vw,1.55rem);
+  line-height:1.4;
+  color:var(--jacaranda);
+  max-width:min(34ch,100%);
+}
+.citacao__fonte{
+  font-size:0.75rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--rosa-forte);font-weight:500;margin-top:10px;
+}
+
+.amostra{display:flex;align-items:center;gap:13px;}
+.amostra__cor{width:42px;height:42px;border-radius:50%;flex:none;border:1px solid rgba(43,31,34,.14);}
+
+a{color:var(--rosa-forte);}
+a:focus-visible,button:focus-visible{outline:2px solid var(--rosa-forte);outline-offset:2px;}
+.slide--escuro a:focus-visible{outline-color:var(--rosa-claro);}
+
+/* Two-column split used on the fase-3 slide */
+.split{display:grid;gap:clamp(16px,2.4vw,30px);grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));}
+
+.slide--denso{--slide-pad:clamp(20px,3.4vw,52px);}
+.slide--denso .h1{font-size:clamp(1.75rem,3.5vw,2.5rem);}
+.slide--denso .fase__nome{font-size:.98rem;}
+.slide--denso .fase__desc{font-size:.86rem;}
+
+@media (max-width:640px){
+  /* Slides get taller than the viewport on a phone; mandatory snap would fight the reader
+     mid-slide, so soften it to proximity. */
+  .deck{scroll-snap-type:y proximity;}
+  .slide{justify-content:flex-start;padding-top:calc(var(--slide-pad) + 26px);}
+  .fase{grid-template-columns:auto 1fr;}
+  .fase__custo{grid-column:2;text-align:left;margin-top:6px;}
+}
+@media (max-height:560px){
+  .slide{min-height:auto;padding-top:56px;padding-bottom:56px;}
+  .deck{scroll-snap-type:none;}
+}
+</style>
+
+<div class="deck">
+
+<!-- 1 ─ Capa -->
+<section class="slide">
+  <span class="contador num">01/13</span>
+  <div class="slide__inner">
+    <div class="marca">
+      <div class="badge" aria-hidden="true">
+        <span class="badge__fa">F&amp;A</span>
+        <span class="badge__mv">MÓVEIS</span>
+        <svg class="badge__casa" viewBox="0 0 12 10"><path d="M6 0 0 4.4h1.5V10h9V4.4H12z" fill="currentColor"/></svg>
+      </div>
+      <span class="marca__texto">F&amp;A MÓVEIS</span>
+    </div>
+
+    <h1 class="display">O seu site,<br>no ar.</h1>
+
+    <div class="regua" role="img" aria-label="30 móveis no site">
+      <span class="regua__tick"></span><span class="regua__linha"></span>
+      <span class="regua__valor">30 móveis no site</span>
+      <span class="regua__linha"></span><span class="regua__tick"></span>
+    </div>
+
+    <p class="lede">Feito com a sua marca, os seus móveis e as suas medidas.
+    Dá pra abrir no celular agora e clicar em tudo.</p>
+
+    <p class="num" style="font-size:.78rem;letter-spacing:.1em;color:var(--rosa-forte);text-transform:uppercase;">
+      Fátima · F&amp;A Móveis · 15 de agosto de 2026</p>
+  </div>
+</section>
+
+<!-- 2 ─ Está no ar -->
+<section class="slide">
+  <span class="contador num">02/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">No ar agora</p>
+    <h2 class="h1">Isso não é um desenho.<br>É o site funcionando.</h2>
+
+    <div class="qr-bloco">
+      __QR__
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:min(100%,270px);">
+        <p class="lede" style="font-size:1.05rem;">Aponta a câmera do celular pro código.
+        Pode mexer à vontade — <strong>tudo que está lá funciona</strong>.</p>
+        <p class="num" style="font-size:.95rem;color:var(--rosa-forte);word-break:break-all;">fa-moveis.vercel.app</p>
+        <div class="chips">
+          <span class="chip">30 móveis</span>
+          <span class="chip">8 categorias</span>
+          <span class="chip">botão do WhatsApp ligado</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="nota">O endereço de hoje é provisório, de teste. Na Fase&nbsp;1 ele vira um domínio seu.</p>
+  </div>
+</section>
+
+<!-- 3 ─ A marca é dela -->
+<section class="slide">
+  <span class="contador num">03/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">A sua marca</p>
+    <h2 class="h1">Eu não mudei nada seu.</h2>
+    <p class="lede">A cor, o nome, o logo, a frase, o jeito de falar — está tudo lá porque
+    já era seu. Eu só levei pra internet, com o acabamento melhor.</p>
+
+    <div class="grade grade--3">
+      <div class="cartao">
+        <span class="cartao__rotulo">A sua cor</span>
+        <div class="amostra">
+          <span class="amostra__cor" style="background:#A87C7C;"></span>
+          <span class="num" style="font-size:.95rem;">#A87C7C</span>
+        </div>
+        <p>Tirada do seu próprio logo. É ela que dá o tom do site inteiro.</p>
+      </div>
+      <div class="cartao">
+        <span class="cartao__rotulo">O seu logo</span>
+        <div class="badge" aria-hidden="true" style="width:62px;height:62px;">
+          <span class="badge__fa" style="font-size:1.05rem;">F&amp;A</span>
+          <span class="badge__mv" style="font-size:.36rem;">MÓVEIS</span>
+          <svg class="badge__casa" viewBox="0 0 12 10" style="width:7px;height:6px;"><path d="M6 0 0 4.4h1.5V10h9V4.4H12z" fill="currentColor"/></svg>
+        </div>
+        <p>O mesmo desenho, redesenhado limpo — pra não sair borrado em tamanho nenhum.</p>
+      </div>
+      <div class="cartao">
+        <span class="cartao__rotulo">A sua frase</span>
+        <p style="font-family:'Bodoni Moda',Georgia,serif;font-size:1.05rem;line-height:1.35;color:var(--jacaranda);">
+          “Móveis de fábrica para decorar sua casa com muita qualidade e sofisticação.”</p>
+        <p style="font-size:.85rem;color:var(--tinta-suave);">Está na home, do jeito que você escreveu.</p>
+      </div>
+    </div>
+
+    <p class="nota">Os textos do site foram escritos copiando o seu jeito de falar —
+    “Lindo balcão para deixar sua cozinha ainda mais bonita e aconchegante!” é sua, do Facebook.</p>
+  </div>
+</section>
+
+<!-- 4 ─ Como é hoje (escuro) -->
+<section class="slide slide--escuro">
+  <span class="contador num">04/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Como é hoje</p>
+    <h2 class="h1">“Você tem roupeiro?”</h2>
+    <p class="lede">E aí começa tudo de novo: mandar foto, uma por uma. Falar a medida.
+    Mandar outra. Explicar a cor. Dizer que entrega e monta. Combinar o parcelamento.
+    Amanhã, outra pessoa pergunta a mesma coisa, e você digita tudo outra vez.</p>
+
+    <div class="regua" role="img" aria-label="Facebook parado desde fevereiro de 2022">
+      <span class="regua__tick"></span><span class="regua__linha"></span>
+      <span class="regua__valor">Facebook parado desde fev. 2022</span>
+      <span class="regua__linha"></span><span class="regua__tick"></span>
+    </div>
+
+    <p class="lede" style="color:var(--papel);"><strong>O seu trabalho é vender móvel —
+    não é repetir a mesma conversa vinte vezes por semana.</strong></p>
+  </div>
+</section>
+
+<!-- 5 ─ A mensagem -->
+<section class="slide">
+  <span class="contador num">05/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Como fica</p>
+    <h2 class="h1">Um link. E a pessoa já<br>chega dizendo o que quer.</h2>
+
+    <div class="grade grade--2" style="align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <p>A cliente acha o móvel no site e toca num botão. <strong>Ela não digita nada.</strong>
+        Essa mensagem chega pronta no seu WhatsApp:</p>
+        <a class="zap-botao" href="https://fa-moveis.vercel.app/produtos/roupeiro-monaco" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.13-2.9-7C17.19 3.03 14.7 2 12.04 2Zm0 1.67c2.23 0 4.33.87 5.9 2.44a8.2 8.2 0 0 1 2.44 5.8c0 4.55-3.7 8.24-8.35 8.24a8.3 8.3 0 0 1-4.22-1.15l-.3-.18-3.14.82.84-3.06-.2-.32a8.15 8.15 0 0 1-1.28-4.4c0-4.55 3.7-8.24 8.31-8.24Z"/></svg>
+          Pedir pelo WhatsApp
+        </a>
+        <p class="nota">É esse o botão que está no site agora. Pode testar no seu celular.</p>
+      </div>
+
+      <div class="zap-bolha">Olá, Fátima! Vi no site e me interessei:
+
+<b>Roupeiro Mônaco</b>
+Medidas: <span class="num">240 × 230 × 55 cm</span> (L × A × P)
+
+<span class="link">fa-moveis.vercel.app/produtos/roupeiro-monaco</span></div>
+    </div>
+
+    <p class="lede">Você abre o WhatsApp e já sabe o modelo e a medida.
+    Não precisa perguntar nada pra começar a vender.</p>
+  </div>
+</section>
+
+<!-- 6 ─ A medida -->
+<section class="slide anima">
+  <span class="contador num">06/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">O seu diferencial</p>
+    <h2 class="h1">Móvel se vende por centímetro.</h2>
+
+    <div class="grade grade--2" style="align-items:center;">
+      <div class="moldura">
+        <div class="moldura__caixa"><span class="moldura__nome">Roupeiro Mônaco</span></div>
+        <div class="regua regua--v regua--v-anim" role="img" aria-label="Altura 230 centímetros">
+          <span class="regua__tick"></span><span class="regua__linha"></span>
+          <span class="regua__valor">230 cm</span>
+          <span class="regua__linha"></span><span class="regua__tick"></span>
+        </div>
+        <div class="regua regua--h-anim" role="img" aria-label="Largura 240 centímetros">
+          <span class="regua__tick"></span><span class="regua__linha"></span>
+          <span class="regua__valor">240 cm</span>
+          <span class="regua__linha"></span><span class="regua__tick"></span>
+        </div>
+        <span class="moldura__prof">prof. 55 cm</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <p>Toda ficha que a fábrica te manda já vem com a medida desenhada.
+        Esse detalhe, que ninguém aproveita, virou <strong>a cara do seu site</strong>:
+        a listinha com o número aparece embaixo de cada móvel.</p>
+        <p>E é a pergunta que a sua cliente realmente faz —
+        <strong>“cabe naquela parede entre a porta e a janela?”</strong></p>
+        <div class="cartao cartao--destaque">
+          <span class="cartao__rotulo">Próximo a entrar no site</span>
+          <p class="h3">Cabe na sua casa?</p>
+          <p>A pessoa digita quantos centímetros ela tem, e o site mostra só o que cabe —
+          “sobra 12 cm de folga”. Nenhuma loja de móveis da sua região tem isso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 ─ Real vs exemplo -->
+<section class="slide">
+  <span class="contador num">07/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Falando claro</p>
+    <h2 class="h1">O que ali é seu,<br>e o que é exemplo.</h2>
+
+    <div class="grade grade--2">
+      <div class="cartao cartao--destaque">
+        <span class="cartao__rotulo">3 são seus, de verdade</span>
+        <ul class="lista">
+          <li><span>Roupeiro Mônaco — <span class="num">240 × 230 × 55 cm</span></span></li>
+          <li><span>Fruteira — <span class="num">107 × 88 × 39 cm</span></span></li>
+          <li><span>Armário Aéreo Max — <span class="num">120 × 58 × 32 cm</span>, aguenta <span class="num">22,5&nbsp;kg</span></span></li>
+        </ul>
+        <p>Medidas copiadas das suas próprias fichas, número por número.
+        <strong>O preço deles aparece como “Consultar”</strong> — preço seu quem põe é você.</p>
+      </div>
+
+      <div class="cartao">
+        <span class="cartao__rotulo">27 são exemplo</span>
+        <p>Servem só pra você ver como fica a loja cheia. Eles têm
+        <strong>nome genérico de propósito</strong> — nenhum usa nome de modelo seu — e
+        as medidas vieram de anúncios de lojas grandes, não foram inventadas.</p>
+        <p>Alguns mostram preço, marcado como ilustrativo, calculado com as
+        <strong>suas condições</strong>: <span class="num">12x</span> sem juros ou desconto à vista.</p>
+        <p style="font-size:.85rem;color:var(--tinta-suave);">O próprio site avisa isso na página de produtos. Nada ali se passa por seu.</p>
+      </div>
+    </div>
+
+    <p class="lede"><strong>Se esses três funcionam, trezentos funcionam igual.</strong>
+    O resto é só passar o seu catálogo pra dentro do site.</p>
+  </div>
+</section>
+
+<!-- 8 ─ As fases -->
+<section class="slide slide--denso">
+  <span class="contador num">08/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Como a gente faz</p>
+    <h2 class="h1">Quatro passos.<br>Você para em qualquer um.</h2>
+
+    <div class="fases">
+      <div class="fase fase--agora">
+        <span class="fase__n">00</span>
+        <div>
+          <div class="fase__nome">Demonstração — é o que você está vendo</div>
+          <div class="fase__desc">Site no ar, com a sua marca e 30 móveis. Já está pronto e não te custou nada.</div>
+        </div>
+        <div class="fase__custo">R$ 0</div>
+      </div>
+
+      <div class="fase">
+        <span class="fase__n">01</span>
+        <div>
+          <div class="fase__nome">Lançamento</div>
+          <div class="fase__desc">Endereço próprio na internet, seu catálogo de verdade no lugar dos exemplos,
+          e o seu cadastro no Google pra loja aparecer nas buscas.</div>
+        </div>
+        <div class="fase__custo">R$ 300
+          <small>R$ 50 pra começar, o resto conforme eu for entregando. Fora o endereço .com.br, que é pago uma vez por ano direto no registro — eu te falo o valor certo antes.</small>
+        </div>
+      </div>
+
+      <div class="fase">
+        <span class="fase__n">02</span>
+        <div>
+          <div class="fase__nome">Cuidar do site — opcional</div>
+          <div class="fase__desc">Móvel novo entra, móvel que saiu de linha sai, foto trocada, promoção do mês.
+          E todo mês eu te mostro quanta gente entrou.</div>
+        </div>
+        <div class="fase__custo">mensal
+          <small>A combinar com você. Só faz sentido quando o site já estiver dando movimento.</small>
+        </div>
+      </div>
+
+      <div class="fase">
+        <span class="fase__n">03</span>
+        <div>
+          <div class="fase__nome">Loja online de verdade</div>
+          <div class="fase__desc">O cliente compra e paga ali mesmo, no cartão ou no Pix, sem passar por você.</div>
+        </div>
+        <div class="fase__custo">até R$ 1.000
+          <small>Negociável, e só quando fizer sentido. Tem também a mensalidade da plataforma, que é dela e eu te mostro na hora.</small>
+        </div>
+      </div>
+    </div>
+
+    <p class="nota">A demonstração já está paga — por mim. Você só decide se quer seguir pro passo 1.</p>
+  </div>
+</section>
+
+<!-- 9 ─ Google -->
+<section class="slide">
+  <span class="contador num">09/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Passo 1 · o que ele traz</p>
+    <h2 class="h1">Gente que ainda não<br>te conhece.</h2>
+    <p class="lede">Hoje quem te acha é quem já te conhece, ou quem passou na frente da loja.
+    Quando alguém do bairro pesquisa <strong>“loja de móveis perto de mim”</strong>,
+    você não aparece.</p>
+
+    <div class="grade grade--2">
+      <div class="cartao">
+        <span class="cartao__rotulo">O que a gente faz</span>
+        <ul class="lista">
+          <li>Cadastrar a loja no Google — endereço, horário, telefone e fotos</li>
+          <li>Ligar o site nesse cadastro</li>
+          <li>Deixar cada categoria pronta pra busca: “roupeiro”, “balcão de cozinha”</li>
+        </ul>
+      </div>
+      <div class="cartao cartao--destaque">
+        <span class="cartao__rotulo">Quanto custa</span>
+        <p class="h2" style="font-family:'IBM Plex Mono',monospace;font-size:2rem;">R$ 0</p>
+        <p>O cadastro no Google é gratuito. Só precisa existir e estar certo —
+        e é o que mais traz gente nova pra uma loja de rua.</p>
+      </div>
+    </div>
+
+    <p class="nota">Pra isso eu preciso do endereço certo e do horário da loja. É o primeiro item da lista do fim.</p>
+  </div>
+</section>
+
+<!-- 10 ─ Cuidar -->
+<section class="slide">
+  <span class="contador num">10/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Passo 2 · opcional</p>
+    <h2 class="h1">Site parado é igual<br>vitrine empoeirada.</h2>
+    <p class="lede">Foi o que aconteceu com o Facebook: a última postagem é de fevereiro de 2022.
+    Não foi falta de vontade — é que manter aquilo dava trabalho e não voltava em venda.</p>
+
+    <div class="grade grade--3">
+      <div class="cartao">
+        <span class="cartao__rotulo">Você manda</span>
+        <p>A foto e a ficha do móvel novo, pelo WhatsApp mesmo.</p>
+      </div>
+      <div class="cartao">
+        <span class="cartao__rotulo">Eu ponho no ar</span>
+        <p>Já tratado, com a medida certa e no padrão do site.</p>
+      </div>
+      <div class="cartao">
+        <span class="cartao__rotulo">Todo mês</span>
+        <p>Eu te mostro quanta gente entrou e quais móveis foram mais vistos.</p>
+      </div>
+    </div>
+
+    <p class="nota">Isso é opcional de verdade. Se você preferir, no passo 1 eu te ensino a me mandar as
+    trocas quando precisar, e a gente acerta por fora.</p>
+  </div>
+</section>
+
+<!-- 11 ─ Fase 3 (escuro) -->
+<section class="slide slide--escuro">
+  <span class="contador num">11/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Passo 3 · mais pra frente</p>
+    <h2 class="h1">Vender o que você<br>ainda não comprou.</h2>
+
+    <p class="lede">Hoje você só vende o que já comprou e está guardado.
+    Numa loja online de verdade, o cliente escolhe, paga no site, e
+    <strong>o móvel pode sair da fábrica direto pra casa dele</strong> — sem passar pelo seu estoque.
+    Você vende antes de comprar.</p>
+
+    <div class="split">
+      <div class="cartao">
+        <span class="cartao__rotulo">O que melhora pra você</span>
+        <ul class="lista">
+          <li>Menos dinheiro parado em móvel guardado esperando comprador</li>
+          <li>Você pode anunciar tudo que a fábrica faz, sem comprar antes</li>
+          <li>O cliente paga sozinho, no cartão ou no Pix, na hora que ele quiser — inclusive de madrugada</li>
+          <li>Dá pra vender pra fora do bairro</li>
+        </ul>
+      </div>
+      <div class="cartao">
+        <span class="cartao__rotulo">O que isso exige de você</span>
+        <ul class="lista">
+          <li>Uma mensalidade da plataforma, todo mês, sem falta</li>
+          <li>Taxa do cartão, e cliente que desiste e pede o dinheiro de volta</li>
+          <li>Nota fiscal, frete e regra de troca — coisa de loja, não de conversa</li>
+          <li>Deixa de ser só WhatsApp: vira uma loja pra tomar conta todo dia</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="nota">Uma coisa a gente precisa confirmar antes de sonhar com isso:
+    <strong>se a sua fábrica aceita mandar direto pro cliente</strong>. Se não aceitar, o passo 3 muda de forma.
+    É a primeira pergunta a fazer pra eles.</p>
+
+    <p class="lede" style="color:var(--papel);">O site já foi construído pensando nesse dia.
+    Quando chegar, <strong>não se joga nada fora</strong> — é só ligar a parte da venda.</p>
+  </div>
+</section>
+
+<!-- 12 ─ O que preciso -->
+<section class="slide">
+  <span class="contador num">12/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Da sua parte</p>
+    <h2 class="h1">O que eu preciso<br>de você.</h2>
+    <p class="lede">Nada disso é urgente hoje. Mas sem os dois primeiros, o site não sai do provisório.</p>
+
+    <div class="grade grade--2">
+      <div class="cartao cartao--destaque">
+        <span class="cartao__rotulo">Pra poder lançar</span>
+        <ul class="lista pedido">
+          <li>O endereço da loja e o horário que você abre</li>
+          <li>Confirmar se o WhatsApp <span class="num">(21) 97002-1791</span> ainda é esse</li>
+          <li>As fotos e fichas dos móveis que você vende <strong>hoje</strong></li>
+          <li>Quais modelos ainda estão na linha — o que eu tenho é de 2022</li>
+        </ul>
+      </div>
+      <div class="cartao">
+        <span class="cartao__rotulo">Ajuda muito, se tiver</span>
+        <ul class="lista pedido">
+          <li>O arquivo original do logo</li>
+          <li>Se você tem Instagram ativo</li>
+          <li>Até onde você entrega, e quanto cobra por bairro</li>
+          <li><strong>Uma foto sua, dentro da loja</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="nota">Essa última é a mais importante das opcionais. Loja grande não tem dono,
+    não tem rosto e não tem bairro. <strong>Você tem</strong> — e é isso que faz a pessoa comprar com você.</p>
+  </div>
+</section>
+
+<!-- 13 ─ Próximo passo -->
+<section class="slide slide--escuro">
+  <span class="contador num">13/13</span>
+  <div class="slide__inner">
+    <p class="eyebrow">Próximo passo</p>
+    <h2 class="display" style="font-size:clamp(2.1rem,5.4vw,3.9rem);">Me manda as fotos<br>e o endereço.</h2>
+
+    <div class="regua" role="img" aria-label="Passo 1: R$ 300, R$ 50 para começar">
+      <span class="regua__tick"></span><span class="regua__linha"></span>
+      <span class="regua__valor">Passo 1 · R$ 300 · R$ 50 pra começar</span>
+      <span class="regua__linha"></span><span class="regua__tick"></span>
+    </div>
+
+    <p class="lede" style="color:var(--papel);">Com isso eu tiro os exemplos, ponho o seu catálogo de verdade,
+    registro o endereço no seu nome e cadastro a loja no Google.
+    Enquanto isso, o site continua no ar do jeito que está — pode mostrar pra quem quiser.</p>
+
+    <div class="marca" style="margin-top:6px;">
+      <div class="badge" aria-hidden="true" style="border-color:var(--rosa-claro);color:var(--rosa-claro);">
+        <span class="badge__fa">F&amp;A</span>
+        <span class="badge__mv">MÓVEIS</span>
+        <svg class="badge__casa" viewBox="0 0 12 10"><path d="M6 0 0 4.4h1.5V10h9V4.4H12z" fill="currentColor"/></svg>
+      </div>
+      <span class="marca__texto">F&amp;A MÓVEIS</span>
+    </div>
+  </div>
+</section>
+
+</div>

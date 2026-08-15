@@ -26,16 +26,22 @@ and voice are all hers, evidenced in `videos/F&A-Moveis-Facebook.mov`. The job i
 existing identity onto the web with better craft. **Never redesign F&A Móveis from zero** —
 `spec-design.md` §2 sets exactly what is kept, refined and retired.
 
-**Status:** Scaffold + catalogue fill done (2026-08-15) — `TASK-scaffold-catalogo.md` steps
-1–4, plus catalogue expanded to 30 products for demo density (`TASK-catalogo-demo.md`). Three
-products are hers, fully transcribed (`Roupeiro Mônaco`, `Fruteira`, `Armário Aéreo Max`; three
-more named in the original plan stay `[VERIFY]` in `docs/dados-produtos.md`). 27 more are demo
-filler — real measurements sourced from public retail listings, generic names that don't match
-any of her real models, disclosed on `/produtos` (see `TASK-catalogo-demo.md` for the full
-rule). `/produtos` (with category filter) and the PDP (gallery, breadcrumb, related products)
-are live; home page is a hero + products preview, not yet the full spec (§7.1 category icon
-rail, fit tool). Next: `/cabe-na-minha-casa`, orçamento drawer, `/sobre`, `/contato`, deploy to
-a real URL and test the WhatsApp flow on an actual phone.
+**Status:** Deployed (2026-08-15) at **`https://fa-moveis.vercel.app`**. Scaffold + catalogue
+fill done (`TASK-scaffold-catalogo.md` steps 1–4, `TASK-catalogo-demo.md`). Three products are
+hers, fully transcribed (`Roupeiro Mônaco`, `Fruteira`, `Armário Aéreo Max`; three more named in
+the original plan stay `[VERIFY]` in `docs/dados-produtos.md`). 27 more are demo filler — real
+measurements sourced from public retail listings, generic names that don't match any of her real
+models, disclosed on `/produtos`. `/produtos` (category filter), the PDP (gallery, breadcrumb,
+related) and the home page (hero, category icon rail, preview) are live.
+
+The client pitch deck is built and published — `docs/apresentacao/`.
+
+**Ordering for what's left is in `docs/tasks/TASK-roteiro-pitch.md`.** In short: finish the
+real-device checklist (`TASK-verificacao-dispositivo.md` §2.4) before building anything new —
+that task already caught two production-only defects invisible from localhost (every WhatsApp
+message shipping a `localhost` URL; `/produtos` unfurling with no OG card). Then
+`/cabe-na-minha-casa`, orçamento drawer, `/contato` + `/sobre`. Local SEO/schema waits for
+phase 1, since it is blocked on her real address.
 
 ### Stack (per `spec-architecture.md` §4 — full rationale there)
 
