@@ -15,7 +15,45 @@ export const loja = {
   horario: "[VERIFY: horário de funcionamento]",
 } as const;
 
-// `||` on purpose, not `??` — an env var set to an empty string in the Vercel dashboard is a
-// real, common misconfiguration, and `??` only falls back on undefined/null, not "". That
-// left `new URL("")` throwing at build time ("Invalid URL", input: '').
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
+// The absolute origin every outbound URL is built from: the WhatsApp deep links (lib/whatsapp.ts),
+// `metadataBase`, the PDP's Product JSON-LD, sitemap.xml and robots.txt.
+//
+// Empty-string handling is deliberate throughout. `NEXT_PUBLIC_SITE_URL` was once set to "" in
+// the Vercel dashboard, which `??` does not treat as missing — that first crashed the build on
+// `new URL("")`, and then, once "fixed" with a plain fallback, silently shipped
+// `http://localhost:3000` inside every WhatsApp message the live site produced. Both failure
+// modes are defended against here; see docs/tasks/TASK-verificacao-dispositivo.md §1.1.
+
+/** Trim, reject empty, and prefix a bare host (Vercel's system vars omit the protocol). */
+function origem(valor: string | undefined, protocolo = ""): string | null {
+  const limpo = valor?.trim();
+  if (!limpo) return null;
+  return protocolo && !limpo.startsWith("http") ? `${protocolo}${limpo}` : limpo;
+}
+
+function resolverSiteUrl(): string {
+  return (
+    // Explicit configuration always wins — this is what a custom domain sets in phase 1.
+    origem(process.env.NEXT_PUBLIC_SITE_URL) ??
+    // Otherwise a Vercel deployment is correct by default: the project's stable production
+    // host, then this specific deployment's host for previews. Both are bare hostnames.
+    origem(process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL, "https://") ??
+    origem(process.env.NEXT_PUBLIC_VERCEL_URL, "https://") ??
+    "http://localhost:3000"
+  );
+}
+
+const resolvido = resolverSiteUrl();
+
+// A production deploy that would emit localhost URLs is the exact defect that reached the live
+// site once already, and it is invisible until someone reads a WhatsApp message closely. Fail
+// the build instead. Scoped to Vercel production so local `pnpm build` and previews are free.
+if (process.env.VERCEL_ENV === "production" && resolvido.startsWith("http://localhost")) {
+  throw new Error(
+    "SITE_URL resolveu para localhost em produção. Defina NEXT_PUBLIC_SITE_URL " +
+      "(ex.: https://fa-moveis.vercel.app) nas variáveis de ambiente de Production da Vercel. " +
+      "Sem isso, todo link do WhatsApp sai com http://localhost:3000.",
+  );
+}
+
+export const SITE_URL = resolvido;
