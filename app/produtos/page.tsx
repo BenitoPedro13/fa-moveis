@@ -3,6 +3,7 @@ import Link from "next/link";
 import { catalog } from "@/lib/catalog/source";
 import { categorias } from "@/content/categorias";
 import { ProdutoCard } from "@/components/produto/ProdutoCard";
+import { AvisoIlustrativo } from "@/components/produto/AvisoIlustrativo";
 import { cn } from "@/lib/cn";
 
 const title = "Produtos";
@@ -40,6 +41,7 @@ export default async function ProdutosPage({
         Móveis de fábrica para decorar sua casa com muita qualidade e sofisticação. Toda medida
         real, do jeito que ela chega até você.
       </p>
+      <AvisoIlustrativo />
 
       {categoriasDisponiveis.length > 1 && (
         <ul className="mt-6 flex flex-wrap gap-2" aria-label="Filtrar por categoria">
@@ -49,7 +51,7 @@ export default async function ProdutosPage({
               className={cn(
                 "inline-flex min-h-9 items-center rounded-[4px] border px-3 text-body-sm",
                 !categoriaAtiva
-                  ? "border-rosa bg-rosa text-papel"
+                  ? "border-rosa-forte bg-rosa-forte text-papel"
                   : "border-rosa/40 text-jacaranda hover:border-rosa",
               )}
             >
@@ -63,7 +65,7 @@ export default async function ProdutosPage({
                 className={cn(
                   "inline-flex min-h-9 items-center rounded-[4px] border px-3 text-body-sm",
                   categoriaAtiva?.slug === c.slug
-                    ? "border-rosa bg-rosa text-papel"
+                    ? "border-rosa-forte bg-rosa-forte text-papel"
                     : "border-rosa/40 text-jacaranda hover:border-rosa",
                 )}
               >

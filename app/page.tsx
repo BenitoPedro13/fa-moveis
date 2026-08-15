@@ -7,13 +7,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { loja } from "@/content/loja";
 import { catalog } from "@/lib/catalog/source";
+import { categorias } from "@/content/categorias";
 import { MedidaLinha } from "@/components/produto/MedidaLinha";
 import { ProdutoCard } from "@/components/produto/ProdutoCard";
+import { AvisoIlustrativo } from "@/components/produto/AvisoIlustrativo";
 import { BotaoWhatsApp } from "@/components/orcamento/BotaoWhatsApp";
+import { NavCategorias } from "@/components/layout/NavCategorias";
 import { linkGeral } from "@/lib/whatsapp";
+
+const PREVIEW_COUNT = 8;
 
 export default async function Home() {
   const produtos = await catalog.listarProdutos();
+  const preview = produtos.slice(0, PREVIEW_COUNT);
+  const categoriasComProdutos = categorias.filter((c) =>
+    produtos.some((p) => p.categoria === c.slug),
+  );
   const destaque = produtos.find((p) => p.destaque) ?? produtos[0];
   const imagemDestaque = destaque?.imagens.find((i) => i.tipo === "produto") ?? destaque?.imagens[0];
 
@@ -58,15 +67,23 @@ export default async function Home() {
       </div>
 
       <section className="mt-20 border-t border-rosa/30 pt-16 sm:mt-28 sm:pt-20">
+        <NavCategorias categorias={categoriasComProdutos} />
+      </section>
+
+      <section className="mt-16 sm:mt-20">
         <div className="flex items-baseline justify-between gap-4">
           <h2 className="font-display text-title-h2 text-jacaranda">Nossos móveis</h2>
           <Link href="/produtos" className="text-body-sm text-rosa-forte hover:text-rosa">
             Ver todos →
           </Link>
         </div>
+        <p className="mt-1 text-eyebrow text-rosa-forte uppercase">
+          {produtos.length} móveis na loja
+        </p>
+        <AvisoIlustrativo />
 
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {produtos.map((produto) => (
+          {preview.map((produto) => (
             <li key={produto.slug}>
               <ProdutoCard produto={produto} />
             </li>

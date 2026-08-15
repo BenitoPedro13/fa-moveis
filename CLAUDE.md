@@ -26,12 +26,16 @@ and voice are all hers, evidenced in `videos/F&A-Moveis-Facebook.mov`. The job i
 existing identity onto the web with better craft. **Never redesign F&A Móveis from zero** —
 `spec-design.md` §2 sets exactly what is kept, refined and retired.
 
-**Status:** Scaffold done (2026-08-15) — `TASK-scaffold-catalogo.md` steps 1–4 of
-`spec-architecture.md` §15. Three products transcribed (`Roupeiro Mônaco`, `Fruteira`,
-`Armário Aéreo Max`; the other three named in the original plan stay `[VERIFY]` in
-`docs/dados-produtos.md`). `/produtos` and the PDP are live; home page is a minimal
-hero + products preview. Next: fill the catalogue toward 20–30 products, then steps 5–9
-(home page hero properly, `/cabe-na-minha-casa`, orçamento drawer, `/sobre`, `/contato`).
+**Status:** Scaffold + catalogue fill done (2026-08-15) — `TASK-scaffold-catalogo.md` steps
+1–4, plus catalogue expanded to 30 products for demo density (`TASK-catalogo-demo.md`). Three
+products are hers, fully transcribed (`Roupeiro Mônaco`, `Fruteira`, `Armário Aéreo Max`; three
+more named in the original plan stay `[VERIFY]` in `docs/dados-produtos.md`). 27 more are demo
+filler — real measurements sourced from public retail listings, generic names that don't match
+any of her real models, disclosed on `/produtos` (see `TASK-catalogo-demo.md` for the full
+rule). `/produtos` (with category filter) and the PDP (gallery, breadcrumb, related products)
+are live; home page is a hero + products preview, not yet the full spec (§7.1 category icon
+rail, fit tool). Next: `/cabe-na-minha-casa`, orçamento drawer, `/sobre`, `/contato`, deploy to
+a real URL and test the WhatsApp flow on an actual phone.
 
 ### Stack (per `spec-architecture.md` §4 — full rationale there)
 

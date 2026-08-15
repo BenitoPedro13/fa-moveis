@@ -20,6 +20,11 @@ const jobs: Job[] = [
   { src: "aereo_max_cutout_tight.png", slug: "armario-aereo-max", nome: "produto-branco" },
   { src: "aereo_max_labeled_tight.png", slug: "armario-aereo-max", nome: "produto-carvalho" },
   { src: "aereo_max_medidas.png", slug: "armario-aereo-max", nome: "tecnico" },
+  // Freely-licensed (Unsplash License) stock photos, shared per category as a secondary
+  // "ambiente" image on demo products — never the primary grid cutout. See stock/ATTRIBUTION.md.
+  { src: "stock/cozinhas.jpg", slug: "_categoria/cozinhas", nome: "ambiente" },
+  { src: "stock/balcoes.jpg", slug: "_categoria/balcoes", nome: "ambiente" },
+  { src: "stock/armarios-aereos.jpg", slug: "_categoria/armarios-aereos", nome: "ambiente" },
 ];
 
 const RAW_DIR =
@@ -37,7 +42,11 @@ async function normalizar(job: Job) {
   const h = meta.height ?? SIZE;
   const side = Math.round(Math.max(w, h) / (1 - PADDING_PCT * 2));
 
-  const padded = await sharp({
+  // Composite and resize in separate pipelines — chaining .resize() straight after
+  // .composite() on a create() canvas makes libvips reorder the ops and choke once the
+  // composited input is larger than the resize target ("Image to composite must have same
+  // dimensions or smaller"), even though the canvas itself is already big enough.
+  const composited = await sharp({
     create: {
       width: side,
       height: side,
@@ -46,9 +55,10 @@ async function normalizar(job: Job) {
     },
   })
     .composite([{ input: inputPath, gravity: "center" }])
-    .resize(SIZE, SIZE)
     .png()
     .toBuffer();
+
+  const padded = await sharp(composited).resize(SIZE, SIZE).png().toBuffer();
 
   const base = path.join(outDir, job.nome);
   await sharp(padded).avif({ quality: 60 }).toFile(`${base}.avif`);

@@ -9,8 +9,18 @@ import type { Produto } from "@/lib/catalog/types";
 
 // spec-design.md §6.3 — the measurement frame around the image. Thumbnails swap which image
 // sits inside the frame; the frame itself (real numbers) never changes with the photo.
+//
+// Default to a real photo over the category line-icon when both exist (demo products in
+// cozinhas/balcoes/armarios-aereos carry both) — the icon is a fallback for when no photo
+// exists at all, not something to prefer over a real one. Grid cards (ProdutoCard) keep using
+// the icon as the `produto`-typed cutout on purpose; this is PDP-only.
+function ehIcone(src: string) {
+  return src.startsWith("/icons/");
+}
+
 export function GaleriaProduto({ produto }: { produto: Produto }) {
-  const principal = produto.imagens.find((i) => i.tipo === "produto") ?? produto.imagens[0];
+  const principal =
+    produto.imagens.find((i) => !ehIcone(i.src)) ?? produto.imagens[0];
   const [ativa, setAtiva] = useState(principal);
 
   if (!ativa) return null;
