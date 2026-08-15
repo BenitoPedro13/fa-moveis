@@ -22,15 +22,17 @@ export function NavCategorias({ categorias }: { categorias: Categoria[] }) {
           <li key={categoria.slug}>
             <Link
               href={`/produtos?categoria=${categoria.slug}`}
-              className="flex flex-col items-center gap-2 rounded-[4px] border border-transparent p-3 text-center transition-colors hover:border-rosa/40"
+              className="group flex flex-col items-center gap-2 rounded-[4px] p-3 text-center"
             >
-              <span className="relative h-12 w-12 shrink-0">
-                <Image
-                  src={`/icons/categorias/${categoria.slug}.svg`}
-                  alt=""
-                  fill
-                  sizes="48px"
-                />
+              <span className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-rosa/40 bg-papel transition-colors group-hover:border-rosa">
+                <span className="relative h-11 w-11">
+                  <Image
+                    src={`/icons/categorias/${categoria.slug}.svg`}
+                    alt=""
+                    fill
+                    sizes="44px"
+                  />
+                </span>
               </span>
               <span className="text-body-sm text-jacaranda">{categoria.nome}</span>
             </Link>
