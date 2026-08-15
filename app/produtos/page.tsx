@@ -5,6 +5,7 @@ import { categorias } from "@/content/categorias";
 import { ProdutoCard } from "@/components/produto/ProdutoCard";
 import { AvisoIlustrativo } from "@/components/produto/AvisoIlustrativo";
 import { cn } from "@/lib/cn";
+import { ogPadrao } from "@/lib/seo";
 
 const title = "Produtos";
 const description = "Móveis de fábrica com medida certa para sua casa.";
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/produtos" },
-  openGraph: { title, description, url: "/produtos" },
+  openGraph: { ...ogPadrao, title, description, url: "/produtos" },
   twitter: { title, description },
 };
 

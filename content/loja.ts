@@ -24,9 +24,15 @@ export const loja = {
 // `http://localhost:3000` inside every WhatsApp message the live site produced. Both failure
 // modes are defended against here; see docs/tasks/TASK-verificacao-dispositivo.md §1.1.
 
-/** Trim, reject empty, and prefix a bare host (Vercel's system vars omit the protocol). */
+/**
+ * Trim, reject empty, prefix a bare host (Vercel's system vars omit the protocol), and strip
+ * trailing slashes. Every caller concatenates `${SITE_URL}/algo`, so a value pasted into the
+ * dashboard as "https://fa-moveis.vercel.app/" would otherwise emit
+ * "https://fa-moveis.vercel.app//produtos/…" — a 308 hop in the WhatsApp message and a
+ * duplicate-URL signal in the sitemap and canonicals. Normalise once, here.
+ */
 function origem(valor: string | undefined, protocolo = ""): string | null {
-  const limpo = valor?.trim();
+  const limpo = valor?.trim().replace(/\/+$/, "");
   if (!limpo) return null;
   return protocolo && !limpo.startsWith("http") ? `${protocolo}${limpo}` : limpo;
 }

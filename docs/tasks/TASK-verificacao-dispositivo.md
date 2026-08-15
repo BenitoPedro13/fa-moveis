@@ -167,6 +167,58 @@ on 4G (`spec-architecture.md` §13).
 
 ---
 
+## 2.5 Found during verification (added mid-task)
+
+Two further defects surfaced while §2.1–§2.4 were being run. Recorded here rather than in a new
+task doc — they are the same defect class (a deploy-only URL/metadata problem invisible from
+localhost) and were found by this task's own checklist.
+
+### A. Trailing slash produced double-slash URLs
+
+`NEXT_PUBLIC_SITE_URL` was first set to `https://fa-moveis.vercel.app/`. Every consumer
+concatenates `${SITE_URL}/algo`, so the live site emitted:
+
+```
+https://fa-moveis.vercel.app//produtos/roupeiro-monaco     (308 → the correct URL)
+Sitemap: https://fa-moveis.vercel.app//sitemap.xml
+```
+
+It resolved — via a 308 — but it put a redirect hop inside the WhatsApp message and a
+duplicate-URL signal into the canonicals and sitemap. Fixed at the source: `origem()` now strips
+trailing slashes, so the value is normalised regardless of how it is pasted into the dashboard.
+
+### B. `/produtos` shipped with no `og:image`, `og:site_name` or `og:locale`
+
+Caught by testing a real WhatsApp share on a phone: the `/produtos` link unfurled as a bare
+title and description with no card image, while `/` unfurled correctly.
+
+**Cause:** Next.js *shallow*-merges `metadata.openGraph`. Both `app/produtos/page.tsx` and
+`app/produtos/[slug]/page.tsx` declare their own `openGraph` object, which replaces the root
+layout's wholesale and drops `type`, `locale` and `siteName`. The PDP still had an image because
+`app/produtos/[slug]/opengraph-image.tsx` exists in its segment; `/produtos` had no such file,
+so it lost the image too.
+
+This matters more than a normal SEO nit: the pitch is *"você manda **um link**"*
+(`spec-architecture.md` §2.3), that link is `/produtos`, and it is shared **on WhatsApp**, which
+renders the OG card. A linkless grey box undercuts the demo at the point of sharing.
+
+**Fix:**
+- `lib/seo.ts` — `ogPadrao` carries `type`/`locale`/`siteName`; both routes spread it instead of
+  restating the fields, so the next page added can't silently drop them again.
+- `app/produtos/opengraph-image.tsx` — a dedicated card rather than inheriting the generic one,
+  since this is the most-shared URL on the site. Uses the régua (`spec-design.md` §6.1) carrying
+  the real catalogue count.
+
+Verified against a production build served locally: `/produtos` now emits all eleven `og:*` tags
+and the image renders (1200 × 630, 43 KB).
+
+**Follow-up, not fixed here:** both OG cards specify `Georgia, serif` for display text, but that
+face isn't present in the Satori runtime, so headings fall back to sans instead of a Didone
+(`spec-design.md` §5). Fixing it means committing a Bodoni Moda `.woff2` and loading it into
+`ImageResponse`. Cosmetic, affects the share card only — worth doing before phase 1.
+
+---
+
 ## 3. Why
 
 The demo's job is to survive ten minutes in Fátima's hands. Every hour spent on new features
@@ -184,7 +236,11 @@ when it is most expensive.
 
 | File | Change | Notes |
 |---|---|---|
-| `content/loja.ts` | edit | `SITE_URL` fallback chain + production build guard (§2.2) |
+| `content/loja.ts` | edit | `SITE_URL` fallback chain + production build guard (§2.2), trailing-slash normalisation (§2.5A) |
+| `lib/seo.ts` | new | `ogPadrao` — shared Open Graph identity fields (§2.5B) |
+| `app/produtos/opengraph-image.tsx` | new | Dedicated share card for the most-shared route (§2.5B) |
+| `app/produtos/page.tsx` | edit | Spread `ogPadrao` into `openGraph` (§2.5B) |
+| `app/produtos/[slug]/page.tsx` | edit | Spread `ogPadrao` into `openGraph` (§2.5B) |
 | `.env.example` | edit | Document the fallback order and that an empty value is caught |
 | `README.md` | edit | Status line; deployed URL; verified-on-device results |
 | `docs/spec-architecture.md` | edit | §14 — record the deployed URL against `[VERIFY]` items where relevant |
@@ -194,7 +250,8 @@ when it is most expensive.
 
 ## 5. Done when
 
-- [ ] `NEXT_PUBLIC_SITE_URL` set in Vercel Production and redeployed.
+- [x] `NEXT_PUBLIC_SITE_URL` set in Vercel Production (done in the dashboard, 2026-08-15).
+- [x] Trailing-slash normalisation and the `og:image` fix build clean (§2.5).
 - [ ] All three `curl` assertions in §1.1 return `https://fa-moveis.vercel.app`, no `localhost`.
 - [ ] `pnpm build` / `pnpm typecheck` / `pnpm lint` clean.
 - [ ] A production build with `VERCEL_ENV=production` and no site URL set **fails** with the

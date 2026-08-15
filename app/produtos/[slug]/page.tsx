@@ -10,6 +10,7 @@ import { BotaoWhatsApp } from "@/components/orcamento/BotaoWhatsApp";
 import { ProdutosRelacionados } from "@/components/produto/ProdutosRelacionados";
 import { linkProduto } from "@/lib/whatsapp";
 import { SITE_URL } from "@/content/loja";
+import { ogPadrao } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const produtos = await catalog.listarProdutos();
@@ -29,10 +30,10 @@ export async function generateMetadata({
     description: produto.resumo,
     alternates: { canonical: `/produtos/${produto.slug}` },
     openGraph: {
+      ...ogPadrao,
       title: produto.nome,
       description: produto.resumo,
       url: `/produtos/${produto.slug}`,
-      type: "website",
     },
     twitter: { title: produto.nome, description: produto.resumo },
   };
