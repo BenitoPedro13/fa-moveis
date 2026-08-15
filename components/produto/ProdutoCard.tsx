@@ -44,7 +44,7 @@ export function ProdutoCard({ produto }: { produto: Produto }) {
         <MedidaLinha
           valor={produto.medidas.larguraCm}
           unidade="cm"
-          className="my-1 max-w-40"
+          className="my-1"
         />
         <PrecoParcelado preco={produto.preco} />
 
