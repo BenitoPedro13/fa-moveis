@@ -15,4 +15,7 @@ export const loja = {
   horario: "[VERIFY: horário de funcionamento]",
 } as const;
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// `||` on purpose, not `??` — an env var set to an empty string in the Vercel dashboard is a
+// real, common misconfiguration, and `??` only falls back on undefined/null, not "". That
+// left `new URL("")` throwing at build time ("Invalid URL", input: '').
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000";
