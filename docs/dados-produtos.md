@@ -104,29 +104,39 @@ measurements into it.
 ## Fornecedores reais — catálogo impresso (QR codes, 2026-08-17)
 
 `docs/tasks/TASK-importar-catalogo-fabrica.md`. Fátima's printed catalogue has a QR code per
-item; the 12 she sent resolve to two named suppliers, confirmed by her directly. All 12 are now
-in `content/produtos.ts`. Prices for all 12 are `[VERIFY]` — pending Fátima confirming in person.
+item; the 12 she sent resolve to two named suppliers, confirmed by her directly. All are now in
+`content/produtos.ts` (13 entries — Cama Verona ended up split into two, see below). Prices for
+all of them are `[VERIFY]` — pending Fátima confirming in person. Her own 3 confirmed products
+are currently pulled from the site (bad Facebook-capture photos, not deleted — see
+`content/produtos.ts` top comment), so these 13 are the entire live catalogue for now.
 
 - **D'Doro** (`dedoromoveis.com.br`) — 3 roupeiros, full specs (measurements, colours,
   construction) scraped straight from the manufacturer's page: `roupeiro-monaco-plus-6-portas`,
   `roupeiro-colibri-6-portas`, `roupeiro-meridian-plus-3-portas`.
 - **Novo Horizonte** (`qrcodefacil.com` → `api.qrfacil.me`, manufacturer site
-  `moveisnovohorizonte.com.br`) — 9 items (guarda-roupas, cabeceiras, camas, cômodas). The
-  qrcodefacil source itself only carries name + one photo + manual/video links, no measurements
-  or colours — those came instead from Benito reading the physical printed catalogue directly
-  (2026-08-17, same day), dictated product by product in chat. That catalogue is the most
-  authoritative source available (it's what Fátima herself uses), more so than the assembly-manual
-  PDFs (Google Drive, linked from each qrcodefacil button) that were considered as a fallback —
-  those do have a dimensions page (confirmed on the Cômoda Áustria manual: Altura 1025mm /
-  Largura 693mm / Profundidade 450mm) but weren't needed once the physical catalogue was on hand.
+  `moveisnovohorizonte.com.br`) — 9 catalogue items → 10 products (guarda-roupas, cabeceiras,
+  camas, cômodas). The qrcodefacil source itself only carries name + one photo + manual/video
+  links, no measurements or colours — those came instead from Benito reading the physical
+  printed catalogue directly (2026-08-17, same day), dictated product by product in chat. That
+  catalogue is the most authoritative source available (it's what Fátima herself uses), more so
+  than the assembly-manual PDFs (Google Drive, linked from each qrcodefacil button) that were
+  considered as a fallback — those do have a dimensions page (confirmed on the Cômoda Áustria
+  manual: Altura 1025mm / Largura 693mm / Profundidade 450mm) but weren't needed once the
+  physical catalogue was on hand.
   Products: `comoda-austria-5-gavetas`, `comoda-space-5-gavetas-2-portas`,
   `comoda-deca-10-gavetas`, `cabeceira-box-himalaia`, `cabeceira-everest`,
   `roupeiro-buriti-3-portas-9-gavetas`, `roupeiro-encant-6-portas-6-gavetas`,
-  `roupeiro-paradizzo`, `cama-verona-casal-e-solteiro`.
+  `roupeiro-paradizzo`, `cama-verona-solteiro`, `cama-verona-casal`.
 
-  `[VERIFY: Cama Verona's measurements (113 × 151 × 207 cm) were dictated identically for both
-  "casal" and "solteiro" — confirmed twice by Benito, not a typo, but not independently verified
-  either. May be one shared spec sheet in the catalogue for both bed sizes.]`
+  **Resolved**: the "Cama Verona Casal e Solteiro" catalogue listing (one QR code, one photo)
+  turned out to be two different bed *designs*, not one frame in two widths — first dictated
+  measurement round gave identical numbers for both sizes (113 × 151 × 207 cm), which Benito
+  then caught himself and corrected: the original qrcodefacil photo is actually the casal
+  (kept as `cama-verona-casal`, largura corrected to 151 cm — the rest of that first round's
+  numbers were right, they were casal's all along), and a separate photo was supplied for
+  solteiro (`cama-verona-solteiro`, largura 101 cm, altura/profundidade unverified — carried
+  over from the original dictation, not independently confirmed for the solteiro-specific
+  frame).
 
   `[VERIFY: both cabeceiras (Himalaia, Everest) list two widths, 2405mm and 2605mm — read as
   panel-only vs. total-width-with-the-2-built-in-nightstands and recorded as 260.5 cm (the total,

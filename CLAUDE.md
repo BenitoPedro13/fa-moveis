@@ -27,17 +27,20 @@ existing identity onto the web with better craft. **Never redesign F&A Móveis f
 `spec-design.md` §2 sets exactly what is kept, refined and retired.
 
 **Status:** Deployed (2026-08-15) at **`https://fa-moveis.vercel.app`**. Scaffold done
-(`TASK-scaffold-catalogo.md` steps 1–4). Catalogue is **15 products, all real, no demo/
+(`TASK-scaffold-catalogo.md` steps 1–4). Catalogue is **13 products, all real, no demo/
 illustrative filler** (the 27-product demo catalogue from `TASK-catalogo-demo.md` was removed
-2026-08-17 once real stock made it redundant — see `TASK-importar-catalogo-fabrica.md` §6). Three
-are hers, fully transcribed (`Roupeiro Mônaco`, `Fruteira`, `Armário Aéreo Max`; three more named
-in the original plan stay `[VERIFY]` in `docs/dados-produtos.md`). Twelve are real supplier stock
-from her printed catalogue's QR codes (`TASK-importar-catalogo-fabrica.md`) — 3 D'Doro roupeiros
-(specs scraped from the manufacturer's site) and 9 Novo Horizonte items (guarda-roupas,
-cabeceiras, camas, cômodas — specs dictated by Benito from the physical catalogue). All 12 still
-have **no confirmed price** — shows "Consulte o preço" — pending Fátima in person. `/produtos`
-(category filter), the PDP (gallery, breadcrumb, related) and the home page (hero, category icon
-rail, preview) are live.
+2026-08-17 once real stock made it redundant — see `TASK-importar-catalogo-fabrica.md` §6). All
+13 are real supplier stock from her printed catalogue's QR codes
+(`TASK-importar-catalogo-fabrica.md`) — 3 D'Doro roupeiros (specs scraped from the
+manufacturer's site) and 10 Novo Horizonte items (guarda-roupas, cabeceiras, 2 camas, cômodas —
+specs dictated by Benito from the physical catalogue). None have a confirmed price yet — shows
+"Consulte o preço" — pending Fátima in person. Her own 3 confirmed products (`Roupeiro Mônaco`,
+`Fruteira`, `Armário Aéreo Max`) are pulled from the site for now, not deleted — their only
+photos are unusable stills from the old Facebook video capture (`content/produtos.ts` top
+comment, `docs/dados-produtos.md`). `/produtos` (category filter), the PDP (gallery, breadcrumb,
+related) and the home page (hero, category icon rail, preview) are live. Product-grid images
+bleed to the card edge (`object-cover`, no visible border — `ProdutoCard`); studio product shots
+on white get their background swapped to `--papel` in `scripts/normalizar-imagens.ts`.
 
 The client pitch deck is built and published — `docs/apresentacao/`.
 

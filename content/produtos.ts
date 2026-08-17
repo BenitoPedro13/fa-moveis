@@ -1,9 +1,14 @@
-// The catalogue. Three products are hers, fully transcribed from docs/dados-produtos.md
-// (Roupeiro Mônaco, Fruteira, Armário Aéreo Max — see TASK-scaffold-catalogo.md §2.4). The rest
-// are real supplier stock from her printed catalogue's QR codes — D'Doro and Novo Horizonte,
-// see docs/tasks/TASK-importar-catalogo-fabrica.md. No demo/illustrative filler — every
-// measurement here traces to her own material (Facebook capture, supplier site, or the printed
+// The catalogue. All real supplier stock from her printed catalogue's QR codes — D'Doro and
+// Novo Horizonte, see docs/tasks/TASK-importar-catalogo-fabrica.md. No demo/illustrative
+// filler — every measurement here traces to her own material (supplier site, or the printed
 // catalogue dictated by Benito) — CLAUDE.md §0 forbids inventing facts.
+//
+// Her own 3 confirmed products (Roupeiro Mônaco, Fruteira, Armário Aéreo Max — measurements in
+// docs/dados-produtos.md, fully real) are pulled off the site for now, not deleted from the
+// record — their only photos are stills from her low-quality Facebook video capture, flagged
+// since TASK-scaffold-catalogo.md as unfit to ship (spec-architecture.md §14 #4/#6). Re-add once
+// real photos exist (ask Fátima directly, or a supplier match like the Mônaco/Mônaco-Plus one
+// noted in dados-produtos.md).
 import type { Produto, Cor } from "@/lib/catalog/types";
 import { hexPorNome } from "@/content/cores";
 
@@ -12,93 +17,6 @@ function cores(...nomes: string[]): Cor[] {
 }
 
 export const produtos: Produto[] = [
-  // ── Confirmadas (docs/dados-produtos.md) ──────────────────────────────────────────────
-  {
-    slug: "roupeiro-monaco",
-    nome: "Roupeiro Mônaco",
-    categoria: "roupeiros",
-    ambientes: ["quarto"],
-    resumo: "Roupeiro de casal deslumbrante, isso e muito mais você encontra na F&A Móveis!",
-    descricao:
-      "Roupeiro de casal com 6 portas e 9 gavetas, bastante espaço para guardar tudo. " +
-      "Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
-    medidas: { larguraCm: 240, alturaCm: 230, profundidadeCm: 55 },
-    // [VERIFY: cor — render em nogueira escura, nome não impresso na captura]
-    cores: [],
-    imagens: [
-      {
-        src: "/produtos/roupeiro-monaco/produto.avif",
-        alt: "Roupeiro Mônaco de 6 portas, vista frontal",
-        tipo: "produto",
-      },
-      {
-        src: "/produtos/roupeiro-monaco/tecnico.avif",
-        alt: "Desenho técnico do Roupeiro Mônaco com medidas 2,40 × 2,30 × 0,55 m",
-        tipo: "tecnico",
-      },
-    ],
-    preco: { aVista: 1590, parcelas: 12, valorParcela: 149 },
-    destaque: true,
-    disponivel: true,
-  },
-  {
-    slug: "fruteira",
-    nome: "Fruteira",
-    categoria: "fruteiras",
-    ambientes: ["cozinha"],
-    resumo: "Lindas Fruteiras para decorar e organizar sua casa!",
-    descricao:
-      "Fruteira com 2 portas e 3 cestos vazados, sobre rodízios para facilitar a limpeza da " +
-      "cozinha. Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
-    medidas: { larguraCm: 107, alturaCm: 88, profundidadeCm: 39 },
-    cores: cores("Branca"),
-    imagens: [
-      {
-        src: "/produtos/fruteira/ambiente.avif",
-        alt: "Fruteira branca em ambiente de cozinha, com frutas nos cestos",
-        tipo: "ambiente",
-      },
-      {
-        src: "/produtos/fruteira/tecnico.avif",
-        alt: "Desenho técnico da Fruteira com medidas 107 × 88 × 39 cm",
-        tipo: "tecnico",
-      },
-    ],
-    destaque: true,
-    disponivel: true,
-  },
-  {
-    slug: "armario-aereo-max",
-    nome: "Armário Aéreo Max",
-    categoria: "armarios-aereos",
-    ambientes: ["cozinha"],
-    resumo: "Lindos Armários Aéreos para decorar e organizar sua cozinha!",
-    descricao:
-      "Armário aéreo de 120 cm com porta basculante e prateleira aberta, suporta até 22,50 kg. " +
-      "Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
-    medidas: { larguraCm: 120, alturaCm: 58, profundidadeCm: 32, pesoSuportadoKg: 22.5 },
-    // [VERIFY: nomes das cores — branco e um woodgrain claro aparecem na captura, nomes não impressos]
-    cores: [],
-    imagens: [
-      {
-        src: "/produtos/armario-aereo-max/produto-branco.avif",
-        alt: "Armário Aéreo Max branco, vista frontal",
-        tipo: "produto",
-      },
-      {
-        src: "/produtos/armario-aereo-max/produto-carvalho.avif",
-        alt: "Armário Aéreo Max em acabamento amadeirado claro, vista frontal",
-        tipo: "produto",
-      },
-      {
-        src: "/produtos/armario-aereo-max/tecnico.avif",
-        alt: "Desenho técnico do Armário Aéreo Max com medidas 120 × 58 × 32 cm, suporta 22,50 kg",
-        tipo: "tecnico",
-      },
-    ],
-    disponivel: true,
-  },
-
   // ── Fornecedor real — D'Doro (docs/tasks/TASK-importar-catalogo-fabrica.md) ──────────────
   // Extraídos do catálogo impresso da loja (QR code → dedoromoveis.com.br) via
   // scripts/importar-catalogo-fabrica.ts — medidas, cores e composição são as do fabricante,
@@ -217,14 +135,9 @@ export const produtos: Produto[] = [
     cores: cores("Neve", "Camaru", "Camaru Fendi"),
     imagens: [
       {
-        src: "/icons/categorias/comodas.svg",
-        alt: "Desenho ilustrativo — Cômoda Áustria 5 Gavetas",
+        src: "/produtos/comoda-austria-5-gavetas/produto.avif",
+        alt: "Cômoda Áustria 5 Gavetas, acabamento camaru",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/comoda-austria-5-gavetas/ambiente.avif",
-        alt: "Cômoda Áustria 5 Gavetas, acabamento camaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
@@ -243,14 +156,9 @@ export const produtos: Produto[] = [
     cores: cores("Neve", "Cumaru", "Cumaru Fendi"),
     imagens: [
       {
-        src: "/icons/categorias/comodas.svg",
-        alt: "Desenho ilustrativo — Cômoda Space 5 Gavetas 2 Portas",
+        src: "/produtos/comoda-space-5-gavetas-2-portas/produto.avif",
+        alt: "Cômoda Space 5 Gavetas 2 Portas, acabamento cumaru",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/comoda-space-5-gavetas-2-portas/ambiente.avif",
-        alt: "Cômoda Space 5 Gavetas 2 Portas, acabamento cumaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
@@ -269,14 +177,9 @@ export const produtos: Produto[] = [
     cores: cores("Neve", "Cumaru", "Cumaru Fendi"),
     imagens: [
       {
-        src: "/icons/categorias/comodas.svg",
-        alt: "Desenho ilustrativo — Cômoda Deca 10 Gavetas",
+        src: "/produtos/comoda-deca-10-gavetas/produto.avif",
+        alt: "Cômoda Deca 10 Gavetas, acabamento cumaru",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/comoda-deca-10-gavetas/ambiente.avif",
-        alt: "Cômoda Deca 10 Gavetas, acabamento cumaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
@@ -318,14 +221,9 @@ export const produtos: Produto[] = [
     cores: cores("Neve", "Cumaru", "Cumaru Fendi"),
     imagens: [
       {
-        src: "/icons/categorias/cabeceiras.svg",
-        alt: "Desenho ilustrativo — Cabeceira Casal Everest",
+        src: "/produtos/cabeceira-everest/produto.avif",
+        alt: "Cabeceira Casal Everest, acabamento cumaru",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/cabeceira-everest/ambiente.avif",
-        alt: "Cabeceira Casal Everest, acabamento cumaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
@@ -344,14 +242,9 @@ export const produtos: Produto[] = [
     cores: cores("Neve", "Cumaru Fendi"),
     imagens: [
       {
-        src: "/icons/categorias/roupeiros.svg",
-        alt: "Desenho ilustrativo — Roupeiro Buriti 3 Portas 9 Gavetas",
+        src: "/produtos/roupeiro-buriti-3-portas-9-gavetas/produto.avif",
+        alt: "Roupeiro Buriti 3 Portas 9 Gavetas, acabamento cumaru fendi",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/roupeiro-buriti-3-portas-9-gavetas/ambiente.avif",
-        alt: "Roupeiro Buriti 3 Portas 9 Gavetas, acabamento cumaru fendi, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
@@ -370,14 +263,9 @@ export const produtos: Produto[] = [
     cores: cores("Neve", "Cumaru", "Cumaru Fendi"),
     imagens: [
       {
-        src: "/icons/categorias/roupeiros.svg",
-        alt: "Desenho ilustrativo — Roupeiro Encant 6 Portas 6 Gavetas",
+        src: "/produtos/roupeiro-encant-6-portas-6-gavetas/produto.avif",
+        alt: "Roupeiro Encant 6 Portas 6 Gavetas, acabamento cumaru",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/roupeiro-encant-6-portas-6-gavetas/ambiente.avif",
-        alt: "Roupeiro Encant 6 Portas 6 Gavetas, acabamento cumaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
@@ -396,42 +284,56 @@ export const produtos: Produto[] = [
     cores: cores("Cumaru", "Cumaru Fendi", "Neve"),
     imagens: [
       {
-        src: "/icons/categorias/roupeiros.svg",
-        alt: "Desenho ilustrativo — Roupeiro Paradizzo",
+        src: "/produtos/roupeiro-paradizzo/produto.avif",
+        alt: "Roupeiro Paradizzo, acabamento cumaru",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/roupeiro-paradizzo/ambiente.avif",
-        alt: "Roupeiro Paradizzo, acabamento cumaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
     disponivel: true,
   },
   {
-    slug: "cama-verona-casal-e-solteiro",
-    nome: "Cama Verona Casal e Solteiro",
+    slug: "cama-verona-solteiro",
+    nome: "Cama Verona Solteiro",
     categoria: "camas",
     ambientes: ["quarto"],
-    resumo: "Cama com cabeceira ripada, disponível em casal e solteiro.",
+    resumo: "Cama de solteiro com cabeceira ripada.",
     descricao:
-      "Cama com cabeceira ripada, disponível em versão casal e solteiro. Móvel de fábrica, " +
-      "entregue e montado na sua casa pela F&A Móveis.",
-    // Mesma ficha de medidas informada pra casal e solteiro no catálogo impresso da loja —
-    // confirmado duas vezes por Benito, não é erro de digitação.
+      "Cama de solteiro com cabeceira ripada. Móvel de fábrica, entregue e montado na sua " +
+      "casa pela F&A Móveis.",
+    // Largura corrigida por Benito em 2026-08-17 (101 cm) — a ficha original do catálogo
+    // impresso tinha o mesmo valor da versão casal (151 cm), que não fazia sentido pra um
+    // solteiro. Altura/profundidade não corrigidas, seguem a ficha impressa.
+    medidas: { larguraCm: 101, alturaCm: 113, profundidadeCm: 207 },
+    cores: cores("Neve", "Cumaru"),
+    imagens: [
+      {
+        src: "/produtos/cama-verona-solteiro/produto.avif",
+        alt: "Cama Verona Solteiro",
+        tipo: "produto",
+      },
+    ],
+    fabricante: "Novo Horizonte",
+    disponivel: true,
+  },
+  {
+    slug: "cama-verona-casal",
+    nome: "Cama Verona Casal",
+    categoria: "camas",
+    ambientes: ["quarto"],
+    resumo: "Cama de casal com cabeceira ripada.",
+    descricao:
+      "Cama de casal com cabeceira ripada. Móvel de fábrica, entregue e montado na sua casa " +
+      "pela F&A Móveis.",
+    // Mesma altura/profundidade da versão solteiro, só a largura muda (confirmado por Benito
+    // 2026-08-17) — bate com a ficha original dictada pra "cama casal verona".
     medidas: { larguraCm: 151, alturaCm: 113, profundidadeCm: 207 },
     cores: cores("Neve", "Cumaru"),
     imagens: [
       {
-        src: "/icons/categorias/camas.svg",
-        alt: "Desenho ilustrativo — Cama Verona Casal e Solteiro",
+        src: "/produtos/cama-verona-casal/produto.avif",
+        alt: "Cama Verona Casal",
         tipo: "produto",
-      },
-      {
-        src: "/produtos/cama-verona-casal-e-solteiro/ambiente.avif",
-        alt: "Cama Verona, acabamento cumaru, em ambiente decorado",
-        tipo: "ambiente",
       },
     ],
     fabricante: "Novo Horizonte",
