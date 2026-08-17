@@ -29,10 +29,16 @@ existing identity onto the web with better craft. **Never redesign F&A Móveis f
 **Status:** Deployed (2026-08-15) at **`https://fa-moveis.vercel.app`**. Scaffold + catalogue
 fill done (`TASK-scaffold-catalogo.md` steps 1–4, `TASK-catalogo-demo.md`). Three products are
 hers, fully transcribed (`Roupeiro Mônaco`, `Fruteira`, `Armário Aéreo Max`; three more named in
-the original plan stay `[VERIFY]` in `docs/dados-produtos.md`). 27 more are demo filler — real
-measurements sourced from public retail listings, generic names that don't match any of her real
-models, disclosed on `/produtos`. `/produtos` (category filter), the PDP (gallery, breadcrumb,
-related) and the home page (hero, category icon rail, preview) are live.
+the original plan stay `[VERIFY]` in `docs/dados-produtos.md`). Three more are real supplier
+stock from her printed catalogue — D'Doro roupeiros (`Mônaco Plus`, `Colibri`, `Meridian Plus`),
+full specs scraped from the manufacturer's own site (`TASK-importar-catalogo-fabrica.md`), price
+still `[VERIFY]`. 27 more are demo filler — real measurements sourced from public retail
+listings, generic names that don't match any of her real models, disclosed on `/produtos`. 9
+more real supplier items (Novo Horizonte — guarda-roupas, cabeceiras, camas, cômodas) are
+identified but not yet in the catalogue: name/photo/manual confirmed, measurements pending
+(manufacturer assembly manuals have a dimensions page — `scripts/importar-catalogo-fabrica.ts`
+doesn't fetch PDFs yet), price pending Fátima in person. `/produtos` (category filter), the PDP
+(gallery, breadcrumb, related) and the home page (hero, category icon rail, preview) are live.
 
 The client pitch deck is built and published — `docs/apresentacao/`.
 

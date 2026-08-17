@@ -138,6 +138,108 @@ export const produtos: Produto[] = [
     disponivel: true,
   },
 
+  // ── Fornecedor real — D'Doro (docs/tasks/TASK-importar-catalogo-fabrica.md) ──────────────
+  // Extraídos do catálogo impresso da loja (QR code → dedoromoveis.com.br) via
+  // scripts/importar-catalogo-fabrica.ts — medidas, cores e composição são as do fabricante,
+  // não uma estimativa. Preço ainda não confirmado com a Fátima — sem campo `preco`, mostra
+  // "Consultar" (spec-architecture.md §11).
+  {
+    slug: "roupeiro-monaco-plus-6-portas",
+    nome: "Roupeiro Mônaco Plus 6 Portas 12 Gavetas",
+    categoria: "roupeiros",
+    ambientes: ["quarto"],
+    resumo: "Roupeiro de casal com 6 portas e 12 gavetas, para quem precisa de muito espaço.",
+    descricao:
+      "Roupeiro de casal com 6 portas e 12 gavetas em MDF, corrediça telescópica de 40 cm e " +
+      "puxadores de madeira. Produzido em chapa de 15mm, com pé e espelho opcionais (altura " +
+      "com pé: 2,40 m). Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 240, alturaCm: 230, profundidadeCm: 55 },
+    cores: cores(
+      "Cinamomo",
+      "Cinamomo com off white",
+      "Branco",
+      "Castanho",
+      "Castanho com linho",
+      "Castanho com off white",
+    ),
+    imagens: [
+      {
+        src: "/produtos/roupeiro-monaco-plus-6-portas/produto.avif",
+        alt: "Roupeiro Mônaco Plus 6 Portas, acabamento cinamomo com off white",
+        tipo: "produto",
+      },
+      {
+        src: "/produtos/roupeiro-monaco-plus-6-portas/produto-branco.avif",
+        alt: "Roupeiro Mônaco Plus 6 Portas, acabamento branco",
+        tipo: "produto",
+      },
+    ],
+    fabricante: "D'Doro",
+    disponivel: true,
+  },
+  {
+    slug: "roupeiro-colibri-6-portas",
+    nome: "Roupeiro Colibri 6 Portas",
+    categoria: "roupeiros",
+    ambientes: ["quarto"],
+    resumo: "Roupeiro de casal com 6 portas e gavetas internas, direto de fábrica.",
+    descricao:
+      "Roupeiro de casal com 6 portas e gavetas internas, corrediça telescópica de 40 cm e " +
+      "puxadores de madeira. Produzido em chapa de 15mm, com pé e espelho opcionais (altura " +
+      "com pé: 2,28 m). Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 206, alturaCm: 218, profundidadeCm: 48 },
+    cores: cores(
+      "Cinamomo",
+      "Cinamomo com off white",
+      "Branco",
+      "Castanho",
+      "Castanho com linho",
+      "Castanho com off white",
+    ),
+    imagens: [
+      {
+        src: "/produtos/roupeiro-colibri-6-portas/produto.avif",
+        alt: "Roupeiro Colibri 6 Portas, acabamento cinamomo",
+        tipo: "produto",
+      },
+      {
+        src: "/produtos/roupeiro-colibri-6-portas/produto-castanho.avif",
+        alt: "Roupeiro Colibri 6 Portas, acabamento castanho",
+        tipo: "produto",
+      },
+    ],
+    fabricante: "D'Doro",
+    disponivel: true,
+  },
+  {
+    slug: "roupeiro-meridian-plus-3-portas",
+    nome: "Roupeiro Meridian Plus 3 Portas",
+    categoria: "roupeiros",
+    ambientes: ["quarto"],
+    resumo: "Roupeiro de casal com 3 portas de correr e espelho, ideal para quartos menores.",
+    descricao:
+      "Roupeiro de casal com 3 portas de correr, espelho central e gaveteiro interno com " +
+      "chave, corrediça telescópica de 40 cm e puxadores de madeira. Produzido em chapa de " +
+      "15mm, com pé opcional (altura com pé: 2,28 m). Móvel de fábrica, entregue e montado na " +
+      "sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 200, alturaCm: 218, profundidadeCm: 52 },
+    cores: cores("Cinamomo", "Cinamomo com off white", "Branco", "Castanho", "Castanho com off white"),
+    imagens: [
+      {
+        src: "/produtos/roupeiro-meridian-plus-3-portas/produto.avif",
+        alt: "Roupeiro Meridian Plus 3 Portas de correr, acabamento cinamomo com off white",
+        tipo: "produto",
+      },
+      {
+        src: "/produtos/roupeiro-meridian-plus-3-portas/produto-branco.avif",
+        alt: "Roupeiro Meridian Plus 3 Portas de correr, acabamento branco",
+        tipo: "produto",
+      },
+    ],
+    fabricante: "D'Doro",
+    disponivel: true,
+  },
+
   // ── Demo — medidas reais de anúncios públicos, nomes genéricos (ver nota no topo) ────────
 
   // roupeiros — madeiramadeira.com.br

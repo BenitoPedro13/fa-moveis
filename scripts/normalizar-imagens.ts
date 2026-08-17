@@ -25,6 +25,35 @@ const jobs: Job[] = [
   { src: "stock/cozinhas.jpg", slug: "_categoria/cozinhas", nome: "ambiente" },
   { src: "stock/balcoes.jpg", slug: "_categoria/balcoes", nome: "ambiente" },
   { src: "stock/armarios-aereos.jpg", slug: "_categoria/armarios-aereos", nome: "ambiente" },
+  // D'Doro (fabricante) product photography, downloaded by
+  // scripts/importar-catalogo-fabrica.ts — docs/tasks/TASK-importar-catalogo-fabrica.md.
+  // Real supplier renders for real stock, not the demo-filler illustrations above.
+  {
+    src: "roupeiro-monaco-plus-6pts/0.jpg",
+    slug: "roupeiro-monaco-plus-6-portas",
+    nome: "produto",
+  },
+  {
+    src: "roupeiro-monaco-plus-6pts/3.jpg",
+    slug: "roupeiro-monaco-plus-6-portas",
+    nome: "produto-branco",
+  },
+  { src: "roupeiro-colibri-6pts/0.jpg", slug: "roupeiro-colibri-6-portas", nome: "produto" },
+  {
+    src: "roupeiro-colibri-6pts/5.jpg",
+    slug: "roupeiro-colibri-6-portas",
+    nome: "produto-castanho",
+  },
+  {
+    src: "roupeiro-meridian-plus-3pts/0.jpg",
+    slug: "roupeiro-meridian-plus-3-portas",
+    nome: "produto",
+  },
+  {
+    src: "roupeiro-meridian-plus-3pts/2.jpg",
+    slug: "roupeiro-meridian-plus-3-portas",
+    nome: "produto-branco",
+  },
 ];
 
 const RAW_DIR =

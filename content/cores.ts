@@ -19,6 +19,12 @@ const MAPA: Record<string, string> = {
   vermont: "#8A6A4A",
   avelã: "#A9825A",
   marrom: "#5C4033",
+  cumaru: "#8A5A34",
+  cinamomo: "#A0623D",
+  "cinamomo com off white": "#A0623D",
+  castanho: "#5C4033",
+  "castanho com linho": "#5C4033",
+  "castanho com off white": "#5C4033",
 };
 
 export function hexPorNome(nome: string): string {

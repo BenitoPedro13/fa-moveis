@@ -33,6 +33,7 @@ export type Produto = {
   preco?: Preco;
   destaque?: boolean;
   disponivel: boolean;
+  fabricante?: string;
 };
 
 export type Categoria = {
