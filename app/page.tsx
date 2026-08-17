@@ -83,9 +83,9 @@ export default async function Home() {
         <AvisoIlustrativo />
 
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {preview.map((produto) => (
+          {preview.map((produto, i) => (
             <li key={produto.slug}>
-              <ProdutoCard produto={produto} />
+              <ProdutoCard produto={produto} prioridade={i === 0} />
             </li>
           ))}
         </ul>

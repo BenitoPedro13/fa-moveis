@@ -10,7 +10,16 @@ import { PrecoParcelado } from "./PrecoParcelado";
 import { BotaoWhatsApp } from "@/components/orcamento/BotaoWhatsApp";
 import { linkProduto } from "@/lib/whatsapp";
 
-export function ProdutoCard({ produto }: { produto: Produto }) {
+export function ProdutoCard({
+  produto,
+  prioridade = false,
+}: {
+  produto: Produto;
+  /** First card in an above-the-fold grid only — Next.js flags it as the LCP element
+   * otherwise, since <Image> lazy-loads by default. Never set on below-the-fold grids
+   * (ProdutosRelacionados). */
+  prioridade?: boolean;
+}) {
   const categoria = categorias.find((c) => c.slug === produto.categoria);
   const imagem = produto.imagens.find((i) => i.tipo === "produto") ?? produto.imagens[0];
 
@@ -23,6 +32,7 @@ export function ProdutoCard({ produto }: { produto: Produto }) {
             alt={imagem.alt}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
+            priority={prioridade}
             className="object-contain transition-transform duration-[180ms] ease-out group-hover:scale-[1.02]"
           />
         )}

@@ -79,9 +79,9 @@ export default async function ProdutosPage({
 
       {produtos.length > 0 ? (
         <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {produtos.map((produto) => (
+          {produtos.map((produto, i) => (
             <li key={produto.slug}>
-              <ProdutoCard produto={produto} />
+              <ProdutoCard produto={produto} prioridade={i === 0} />
             </li>
           ))}
         </ul>
