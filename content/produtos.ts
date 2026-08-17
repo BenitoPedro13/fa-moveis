@@ -357,7 +357,7 @@ export const produtos: Produto[] = [
     cores: cores("Cinamomo"),
     imagens: [
       {
-        src: "/produtos/comoda-california-8-gavetas/produto.avif",
+        src: "/produtos/comoda-california-8-gavetas/comoda_california_cinamomo_1.webp",
         alt: "Cômoda Califórnia 8 Gavetas, acabamento cinamomo",
         tipo: "produto",
       },
@@ -377,7 +377,7 @@ export const produtos: Produto[] = [
     cores: cores("Cinamomo", "Off Arenas"),
     imagens: [
       {
-        src: "/produtos/comoda-milao/produto.avif",
+        src: "/produtos/comoda-milao/comoda_milao_cinamo_off_arenas_1.webp",
         alt: "Cômoda Milão, acabamento cinamomo",
         tipo: "produto",
       },
@@ -399,7 +399,7 @@ export const produtos: Produto[] = [
     cores: cores("Cinamomo", "Off Arenas", "Castanho"),
     imagens: [
       {
-        src: "/produtos/multiuso-sparta/produto.avif",
+        src: "/produtos/multiuso-sparta/multiuso_sparta_cinamomo_off_arenas.webp",
         alt: "Multiuso Sparta, acabamento cinamomo",
         tipo: "produto",
       },
@@ -421,7 +421,7 @@ export const produtos: Produto[] = [
     cores: cores("Cinamomo", "Off Arenas"),
     imagens: [
       {
-        src: "/produtos/balcao-flora/produto.avif",
+        src: "/produtos/balcao-flora/balcao_flora_cina_off_arenas1000x600.webp",
         alt: "Balcão Flora, acabamento cinamomo",
         tipo: "produto",
       },
@@ -443,7 +443,7 @@ export const produtos: Produto[] = [
     cores: cores("Cinamomo", "Refleta"),
     imagens: [
       {
-        src: "/produtos/aereo-central-flora/produto.avif",
+        src: "/produtos/aereo-central-flora/aereo_2p_flora_cina_reflecta1000x500.webp",
         alt: "Aéreo Central Flora 1,20, acabamento cinamomo",
         tipo: "produto",
       },

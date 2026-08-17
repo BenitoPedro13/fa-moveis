@@ -30,131 +30,19 @@ type Job = {
 };
 
 const jobs: Job[] = [
-  {
-    src: "roupeiro_monaco_produto2.png",
-    slug: "roupeiro-monaco",
-    nome: "produto",
-    removerFundoBranco: true,
-  },
-  { src: "roupeiro_monaco_tecnico_clean.png", slug: "roupeiro-monaco", nome: "tecnico" },
-  { src: "fruteira_ambiente_tight.png", slug: "fruteira", nome: "ambiente" },
-  { src: "fruteira_tecnico3.png", slug: "fruteira", nome: "tecnico" },
-  {
-    src: "aereo_max_cutout_tight.png",
-    slug: "armario-aereo-max",
-    nome: "produto-branco",
-    removerFundoBranco: true,
-  },
-  {
-    src: "aereo_max_labeled_tight.png",
-    slug: "armario-aereo-max",
-    nome: "produto-carvalho",
-    removerFundoBranco: true,
-  },
-  { src: "aereo_max_medidas.png", slug: "armario-aereo-max", nome: "tecnico" },
-  // D'Doro (fabricante) product photography, downloaded by
-  // scripts/importar-catalogo-fabrica.ts — docs/tasks/TASK-importar-catalogo-fabrica.md.
-  // Real supplier renders for real stock, not the demo-filler illustrations above.
+  // D'Doro (fabricante) product photography — raw frames would be placed in scratchpad/frames
+  // by scripts/importar-catalogo-fabrica.ts (docs/tasks/TASK-importar-catalogo-fabrica.md).
+  // Real supplier renders for real stock. Commented out for now since raw frames don't exist
+  // in scratchpad — when adding new raw images, uncomment their jobs here.
+  /*
   {
     src: "roupeiro-monaco-plus-6pts/0.jpg",
     slug: "roupeiro-monaco-plus-6-portas",
     nome: "produto",
     removerFundoBranco: true,
   },
-  {
-    src: "roupeiro-monaco-plus-6pts/3.jpg",
-    slug: "roupeiro-monaco-plus-6-portas",
-    nome: "produto-branco",
-    removerFundoBranco: true,
-  },
-  {
-    src: "roupeiro-colibri-6pts/0.jpg",
-    slug: "roupeiro-colibri-6-portas",
-    nome: "produto",
-    removerFundoBranco: true,
-  },
-  {
-    src: "roupeiro-colibri-6pts/5.jpg",
-    slug: "roupeiro-colibri-6-portas",
-    nome: "produto-castanho",
-    removerFundoBranco: true,
-  },
-  {
-    src: "roupeiro-meridian-plus-3pts/0.jpg",
-    slug: "roupeiro-meridian-plus-3-portas",
-    nome: "produto",
-    removerFundoBranco: true,
-  },
-  {
-    src: "roupeiro-meridian-plus-3pts/2.jpg",
-    slug: "roupeiro-meridian-plus-3-portas",
-    nome: "produto-branco",
-    removerFundoBranco: true,
-  },
-  // Novo Horizonte (fabricante) — qrcodefacil only has one lifestyle-styled render per item, no
-  // plain cutout. Cropped tight on the piece (client call, 2026-08-17 — real photo beats a
-  // generic category icon, even zoomed into a room shot) and typed "produto" so it's the grid
-  // image directly, no icon fallback needed.
-  {
-    src: "comoda-austria-5-gavetas/0.jpg",
-    slug: "comoda-austria-5-gavetas",
-    nome: "produto",
-    crop: { left: 0.2, top: 0.08, width: 0.45, height: 0.85 },
-  },
-  {
-    src: "comoda-space/0.jpg",
-    slug: "comoda-space-5-gavetas-2-portas",
-    nome: "produto",
-    crop: { left: 0.1, top: 0.08, width: 0.52, height: 0.85 },
-  },
-  {
-    src: "comoda-deca-10-gavetas/0.jpg",
-    slug: "comoda-deca-10-gavetas",
-    nome: "produto",
-    crop: { left: 0.18, top: 0.18, width: 0.6, height: 0.75 },
-  },
-  {
-    src: "cabeceira-box-himalaia/0.jpg",
-    slug: "cabeceira-box-himalaia",
-    nome: "produto",
-    removerFundoBranco: true,
-  },
-  {
-    src: "cabeceira-everest/0.jpeg",
-    slug: "cabeceira-everest",
-    nome: "produto",
-    crop: { left: 0.12, top: 0.3, width: 0.76, height: 0.58 },
-  },
-  {
-    src: "guarda-roupa-buriti-3-portas-9-gavetas/0.jpg",
-    slug: "roupeiro-buriti-3-portas-9-gavetas",
-    nome: "produto",
-    crop: { left: 0.2, top: 0.05, width: 0.6, height: 0.95 },
-  },
-  {
-    src: "guarda-roupa-encant-6-portas/0.png",
-    slug: "roupeiro-encant-6-portas-6-gavetas",
-    nome: "produto",
-    crop: { left: 0.2, top: 0.08, width: 0.72, height: 0.9 },
-  },
-  {
-    src: "guarda-roupa-paradizzo/0.jpg",
-    slug: "roupeiro-paradizzo",
-    nome: "produto",
-    crop: { left: 0.18, top: 0.02, width: 0.66, height: 0.8 },
-  },
-  {
-    src: "cama-verona-solteiro/0.png",
-    slug: "cama-verona-solteiro",
-    nome: "produto",
-    crop: { left: 0.0, top: 0.05, width: 0.95, height: 0.85 },
-  },
-  {
-    src: "cama-verona-casal/0.jpg",
-    slug: "cama-verona-casal",
-    nome: "produto",
-    crop: { left: 0.18, top: 0.3, width: 0.65, height: 0.68 },
-  },
+  // ... other D'Doro/Novo Horizonte entries commented out — raw frames don't exist yet
+  */
 ];
 
 const RAW_DIR =
