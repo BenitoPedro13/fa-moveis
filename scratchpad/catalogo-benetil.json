@@ -1,0 +1,38 @@
+[
+  {
+    "ref": "10104",
+    "nome": "Cômoda Califórnia 8 Gavetas",
+    "cores": [],
+    "imagens": [],
+    "fonte": "https://benetil.com.br/index.php?produto&cod=317&grupo=2&C%C3%B4moda-Calif%C3%B3rnia&2608172614081326",
+    "fornecedor": "Benetil",
+    "notas": "Erro na extração: TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://benetil.com.br/index.php?produto&cod=317&grupo=2&C%C3%B4moda-Calif%C3%B3rnia&2608172614081326\", waiting until \"domcontentloaded\"\u001b[22m\n"
+  },
+  {
+    "ref": "8079",
+    "nome": "Cômoda Milão",
+    "cores": [],
+    "imagens": [],
+    "fonte": "https://benetil.com.br/index.php?produto&cod=292&grupo=2&C%C3%B4moda-Mil%C3%A3o&2608172614080626",
+    "fornecedor": "Benetil",
+    "notas": "Erro na extração: TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://benetil.com.br/index.php?produto&cod=292&grupo=2&C%C3%B4moda-Mil%C3%A3o&2608172614080626\", waiting until \"domcontentloaded\"\u001b[22m\n"
+  },
+  {
+    "ref": "7479",
+    "nome": "Multiuso Sparta",
+    "cores": [],
+    "imagens": [],
+    "fonte": "https://benetil.com.br/index.php?produto&cod=285&grupo=6&Multiuso-Sparta&2608172614080326",
+    "fornecedor": "Benetil",
+    "notas": "Erro na extração: Error: page.goto: net::ERR_CONNECTION_TIMED_OUT at https://benetil.com.br/index.php?produto&cod=285&grupo=6&Multiuso-Sparta&2608172614080326\nCall log:\n\u001b[2m  - navigating to \"https://benetil.com.br/index.php?produto&cod=285&grupo=6&Multiuso-Sparta&2608172614080326\", waiting until \"domcontentloaded\"\u001b[22m\n"
+  },
+  {
+    "ref": "11925/11934",
+    "nome": "Flora",
+    "cores": [],
+    "imagens": [],
+    "fonte": "https://benetil.com.br/index.php?produto&cod=342&grupo=7&Cozinha-Modulada-Flora",
+    "fornecedor": "Benetil",
+    "notas": "Erro na extração: Error: page.goto: net::ERR_CONNECTION_TIMED_OUT at https://benetil.com.br/index.php?produto&cod=342&grupo=7&Cozinha-Modulada-Flora\nCall log:\n\u001b[2m  - navigating to \"https://benetil.com.br/index.php?produto&cod=342&grupo=7&Cozinha-Modulada-Flora\", waiting until \"domcontentloaded\"\u001b[22m\n"
+  }
+]

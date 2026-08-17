@@ -15,8 +15,8 @@ export type Cor = {
 
 export type Preco = {
   aVista: number;
-  parcelas: number;
-  valorParcela: number;
+  parcelas?: number;
+  valorParcela?: number;
   descontoAVistaPct?: number;
 };
 

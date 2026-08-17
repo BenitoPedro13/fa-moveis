@@ -339,4 +339,117 @@ export const produtos: Produto[] = [
     fabricante: "Novo Horizonte",
     disponivel: true,
   },
+
+  // ── Fornecedor real — Benetil (distribuidor de móveis) ──────────────────────────────────
+  // Produtos de novo fornecedor agregado 2026-08-17, via benetil.com.br. Custo wholesale
+  // fornecido via WhatsApp com markup 2x para preço de venda. Medidas e descrições detalhadas
+  // ainda precisam ser confirmadas diretamente com Fátima ou obtidas do manual de cada produto.
+  // [VERIFY: dimensões exatas, peso suportado, composição dos materiais — obter do manual ou
+  // ficha técnica de Benetil.]
+  {
+    slug: "comoda-california-8-gavetas",
+    nome: "Cômoda Califórnia 8 Gavetas",
+    categoria: "comodas",
+    ambientes: ["quarto"],
+    resumo: "Cômoda com 8 gavetas para organizar o quarto.",
+    descricao: "Cômoda com 8 gavetas. Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 79.3, alturaCm: 110, profundidadeCm: 45 },
+    cores: cores("Cinamomo"),
+    imagens: [
+      {
+        src: "/produtos/comoda-california-8-gavetas/produto.avif",
+        alt: "Cômoda Califórnia 8 Gavetas, acabamento cinamomo",
+        tipo: "produto",
+      },
+    ],
+    preco: { aVista: 1114.8 },
+    fabricante: "Benetil",
+    disponivel: true,
+  },
+  {
+    slug: "comoda-milao",
+    nome: "Cômoda Milão",
+    categoria: "comodas",
+    ambientes: ["quarto"],
+    resumo: "Cômoda com gavetas, disponível em duas cores.",
+    descricao: "Cômoda com gavetas. Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 79.3, alturaCm: 110, profundidadeCm: 45 },
+    cores: cores("Cinamomo", "Off Arenas"),
+    imagens: [
+      {
+        src: "/produtos/comoda-milao/produto.avif",
+        alt: "Cômoda Milão, acabamento cinamomo",
+        tipo: "produto",
+      },
+    ],
+    preco: { aVista: 913.2 },
+    fabricante: "Benetil",
+    disponivel: true,
+  },
+  {
+    slug: "multiuso-sparta",
+    nome: "Multiuso Sparta",
+    categoria: "multiusos",
+    ambientes: ["quarto", "sala"],
+    resumo: "Multiuso versátil, disponível em três acabamentos.",
+    descricao:
+      "Multiuso prático para uso em quarto ou sala. Móvel de fábrica, entregue e montado " +
+      "na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 40, alturaCm: 110, profundidadeCm: 30 },
+    cores: cores("Cinamomo", "Off Arenas", "Castanho"),
+    imagens: [
+      {
+        src: "/produtos/multiuso-sparta/produto.avif",
+        alt: "Multiuso Sparta, acabamento cinamomo",
+        tipo: "produto",
+      },
+    ],
+    preco: { aVista: 446.8 },
+    fabricante: "Benetil",
+    disponivel: true,
+  },
+  {
+    slug: "balcao-flora",
+    nome: "Balcão Flora",
+    categoria: "balcoes",
+    ambientes: ["cozinha"],
+    resumo: "Balcão utilitário com acabamento refinado.",
+    descricao:
+      "Balcão utilitário da linha Flora em MDF 15mm. Puxadores modernos e corrediças " +
+      "telescópicas. Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 120, alturaCm: 85, profundidadeCm: 47 },
+    cores: cores("Cinamomo", "Off Arenas"),
+    imagens: [
+      {
+        src: "/produtos/balcao-flora/produto.avif",
+        alt: "Balcão Flora, acabamento cinamomo",
+        tipo: "produto",
+      },
+    ],
+    preco: { aVista: 670 },
+    fabricante: "Benetil",
+    disponivel: true,
+  },
+  {
+    slug: "aereo-central-flora",
+    nome: "Aéreo Central Flora 1,20",
+    categoria: "armarios-aereos",
+    ambientes: ["cozinha"],
+    resumo: "Aéreo com 1,20 m de largura, da linha Flora.",
+    descricao:
+      "Aéreo com 1,20 m de largura da linha Flora em MDF 15mm. Puxadores modernos e " +
+      "corrediças telescópicas. Móvel de fábrica, entregue e montado na sua casa pela F&A Móveis.",
+    medidas: { larguraCm: 120, alturaCm: 68, profundidadeCm: 30 },
+    cores: cores("Cinamomo", "Refleta"),
+    imagens: [
+      {
+        src: "/produtos/aereo-central-flora/produto.avif",
+        alt: "Aéreo Central Flora 1,20, acabamento cinamomo",
+        tipo: "produto",
+      },
+    ],
+    preco: { aVista: 730 },
+    fabricante: "Benetil",
+    disponivel: true,
+  },
 ];
