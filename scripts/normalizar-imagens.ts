@@ -54,6 +54,35 @@ const jobs: Job[] = [
     slug: "roupeiro-meridian-plus-3-portas",
     nome: "produto-branco",
   },
+  // Novo Horizonte (fabricante) — qrcodefacil only has one lifestyle-styled render per item,
+  // no plain cutout. Typed "ambiente" in content/produtos.ts; ProdutoCard already falls back
+  // to imagens[0] as the grid image when no "produto"-typed image exists (same pattern as the
+  // existing `fruteira` entry).
+  { src: "comoda-austria-5-gavetas/0.jpg", slug: "comoda-austria-5-gavetas", nome: "ambiente" },
+  { src: "comoda-space/0.jpg", slug: "comoda-space-5-gavetas-2-portas", nome: "ambiente" },
+  { src: "comoda-deca-10-gavetas/0.jpg", slug: "comoda-deca-10-gavetas", nome: "ambiente" },
+  {
+    src: "cabeceira-box-himalaia/0.jpg",
+    slug: "cabeceira-box-himalaia",
+    nome: "produto",
+  },
+  { src: "cabeceira-everest/0.jpeg", slug: "cabeceira-everest", nome: "ambiente" },
+  {
+    src: "guarda-roupa-buriti-3-portas-9-gavetas/0.jpg",
+    slug: "roupeiro-buriti-3-portas-9-gavetas",
+    nome: "ambiente",
+  },
+  {
+    src: "guarda-roupa-encant-6-portas/0.png",
+    slug: "roupeiro-encant-6-portas-6-gavetas",
+    nome: "ambiente",
+  },
+  { src: "guarda-roupa-paradizzo/0.jpg", slug: "roupeiro-paradizzo", nome: "ambiente" },
+  {
+    src: "cama-verona-casal-e-solteiro/0.jpg",
+    slug: "cama-verona-casal-e-solteiro",
+    nome: "ambiente",
+  },
 ];
 
 const RAW_DIR =
@@ -66,7 +95,20 @@ async function normalizar(job: Job) {
   const outDir = path.join(OUT_ROOT, job.slug);
   await mkdir(outDir, { recursive: true });
 
-  const meta = await sharp(inputPath).metadata();
+  // Supplier renders already carry their own generous white margin around the furniture
+  // (product photography convention, not our 12% padding). Trimming that off first means the
+  // 12% below is measured against the actual silhouette, not the silhouette-plus-margin the
+  // photographer left — otherwise the two margins stack and the piece reads as tiny inside its
+  // grid square. Lifestyle ("ambiente") sources have no uniform border to trim, so trim() is a
+  // no-op on those — safe to run unconditionally.
+  let trimmed: Buffer;
+  try {
+    trimmed = await sharp(inputPath).trim({ background: "#ffffff", threshold: 15 }).toBuffer();
+  } catch {
+    trimmed = await sharp(inputPath).toBuffer();
+  }
+
+  const meta = await sharp(trimmed).metadata();
   const w = meta.width ?? SIZE;
   const h = meta.height ?? SIZE;
   const side = Math.round(Math.max(w, h) / (1 - PADDING_PCT * 2));
@@ -83,7 +125,7 @@ async function normalizar(job: Job) {
       background: PAPEL,
     },
   })
-    .composite([{ input: inputPath, gravity: "center" }])
+    .composite([{ input: trimmed, gravity: "center" }])
     .png()
     .toBuffer();
 

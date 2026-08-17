@@ -4,6 +4,7 @@
 const MAPA: Record<string, string> = {
   branco: "#FFFFFF",
   branca: "#FFFFFF",
+  neve: "#FFFFFF",
   "off white": "#F3EDE6",
   preto: "#1E1B19",
   "preto fosco": "#1E1B19",
@@ -20,6 +21,9 @@ const MAPA: Record<string, string> = {
   avelã: "#A9825A",
   marrom: "#5C4033",
   cumaru: "#8A5A34",
+  "cumaru fendi": "#8A5A34",
+  camaru: "#8A5A34",
+  "camaru fendi": "#8A5A34",
   cinamomo: "#A0623D",
   "cinamomo com off white": "#A0623D",
   castanho: "#5C4033",

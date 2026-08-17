@@ -179,27 +179,72 @@ every final call on what ships as a real spec vs. what stays `[VERIFY]`.
 - [x] Script fetches all 12 sources and produces `catalogo-fabrica.json` with every field
   populated or explicitly `null`, never a guess.
 - [x] Images normalized through the existing pipeline, under the 180 KB budget
-  (`spec-architecture.md` §13) — largest output 11 KB.
-- [x] `content/produtos.ts` has 33 products (30 + 3 D'Doro); `pnpm build`/`typecheck`/`lint`
-  clean; production PDP checked for the new slugs (medidas, cores, "Consulte o preço", images
-  all render correctly).
+  (`spec-architecture.md` §13).
+- [x] `content/produtos.ts` has all 15 real products (3 hers + 3 D'Doro + 9 Novo Horizonte);
+  `pnpm build`/`typecheck`/`lint` clean; production PDP checked for the new slugs.
 - [x] `docs/dados-produtos.md` and `CLAUDE.md` updated.
-- [ ] **Deferred, client decision 2026-08-17**: the 9 Novo Horizonte items are *not* merged —
-  only the 3 D'Doro roupeiros are, since Novo Horizonte's own source has no measurements. Benito
-  is visiting the store to confirm prices with Fátima in person and will source the other 9
-  items' specs from other resellers' sites at the same time — so `camas`/`cabeceiras`/`comodas`
-  categories, their colour entries, and their `content/produtos.ts` entries all wait for that.
-  `scratchpad/catalogo-fabrica.json` (name/photo/manual links for all 9) survives only for this
-  session — re-run `scripts/importar-catalogo-fabrica.ts` to regenerate it.
-- [ ] Found the manufacturer's own site, `moveisnovohorizonte.com.br` — same
-  `_produtos/{slug}/` WordPress structure as D'Doro's, confirmed `roupeiro-paradizzo` and
-  `roupeiro-himalaia-2` respond (name matches 2 of the 9 missing items) after warming a session
-  cookie from the homepage first (plain `curl` 403s without one). Started timing out after a
-  handful of requests — looked like rate-limiting on their end, not pursued further to avoid
-  hammering a third party's production site. Revisit slowly, one request at a time, when doing
-  the follow-up.
-- [ ] Confirmed better source for the missing 9: the assembly-manual PDFs linked from each
-  qrcodefacil button **do** carry a dimensions page (verified on the Cômoda Áustria manual —
-  Altura 1025mm / Largura 693mm / Profundidade 450mm). `importar-catalogo-fabrica.ts` doesn't
-  fetch/parse PDFs yet — worth adding when picking this back up, since it may be a more reliable
-  match than searching other resellers by name (§2.2's own concern about name collisions).
+- [x] All 9 Novo Horizonte items merged — see §6.
+
+## 6. Update — 2026-08-17, all 9 Novo Horizonte items merged same day
+
+Benito had the physical printed catalogue open next to him and dictated exact
+measurements/colours for all 9 remaining items directly in chat — the most authoritative source
+available (it's literally what Fátima uses). Processed incrementally, one product per message:
+category added (`comodas`, `cabeceiras`, `camas` — client confirmed use the catalogue's own
+product-type words), colour hex added as needed (`neve`→white, `camaru`/`cumaru` and their
+"X Fendi" compounds → same wood-tone hex as their base colour, since the compound name is one
+purchasable finish, not two), image copied into the raw-frames dir, run through
+`normalizar-imagens.ts`, `Produto` entry added, `pnpm typecheck` after each.
+
+**Cama Verona**: dictated twice, once as "solteiro" and once as "casal", both times with
+identical numbers (113 × 151 × 207 cm). Recorded as-is with a code comment flagging it's
+confirmed, not a transcription error — the product name itself is "Casal e Solteiro", so this
+may be one shared spec sheet in her catalogue for both bed sizes.
+
+**Cabeceira largura had two numbers** (2405/2605mm) on both cabeceira products — resolved as
+panel-only vs. total-width-with-the-2-built-in-nightstands (the product is sold as a 3-piece
+set). Went with the total (260.5 cm) as `medidas.larguraCm` since that's the real footprint for
+room-fit purposes, panel-only width kept as a note in `descricao`. Not independently confirmed
+with Benito — flag if wrong.
+
+**Image quality problem found by the client, fixed**: the qrcodefacil-only items have exactly
+one photo each, and it's a lifestyle/room render (brick walls, curtains, plants), not a plain
+cutout — using it directly as the grid image broke the clean product-shot look the rest of the
+catalogue has. Fixed by applying the *existing* icon-fallback pattern already used for `fruteira`
+(her own real product with no clean cutout): the category line-icon ships as the `produto`-typed
+grid image, the real supplier photo stays `ambiente`-typed (PDP hero only, matches
+`GaleriaProduto`'s existing prefer-real-photo-over-icon logic). Needed 3 new icons —
+`public/icons/categorias/comodas.svg`, `cabeceiras.svg`, `camas.svg`, same hand-drawn style as
+the 8 existing ones (`viewBox 0 0 200 200`, `#8E5F62` stroke). `roupeiros` already had one.
+
+**Separate real bug found and fixed in `scripts/normalizar-imagens.ts`**: supplier product
+photography ships with its own generous white margin baked in (studio-photography convention),
+and the script's 12%-padding math was computed against that already-padded bounding box —
+stacking two margins, so the furniture rendered small inside its grid square even on the clean
+D'Doro cutouts. Fixed with `sharp(...).trim()` before computing the padding, so 12% is now
+relative to the actual silhouette. Wrapped in try/catch since `.trim()` can throw on images with
+no uniform border (the lifestyle photos) — falls back to the untrimmed buffer, which is correct
+behavior for those (nothing to trim, whole frame is content). All 25 existing images re-run
+through the fixed pipeline in place — no `content/produtos.ts` changes needed for this part, same
+filenames.
+
+**Client also asked to delete the demo-filler products** (`/loop`-adjacent request, not part of
+this task's original scope, done in the same session because the real catalogue had grown enough
+to make the filler pointless): removed all 27 demo entries from `content/produtos.ts`, and the
+now-dead code that only existed to build them — `precoIlustrativo()`, `iconeCategoria()`,
+`AMBIENTE_CATEGORIAS`, the top-of-file demo-filler explainer comment. Removed
+`components/produto/AvisoIlustrativo.tsx` (the "preços e modelos são ilustrativos" disclaimer)
+and its two usages (`app/page.tsx`, `app/produtos/page.tsx`) — no longer accurate once nothing on
+the site is illustrative. Removed `public/produtos/_categoria/` (the 3 shared Unsplash stock
+photos + `ATTRIBUTION.md` demo products used as a secondary `ambiente` image) since nothing
+references them anymore. Left the 7 now-unreferenced category icons (`cozinhas.svg`,
+`balcoes.svg`, `aparador-bar.svg`, `fruteiras.svg` note: `fruteiras.svg` was never actually wired
+to the real `fruteira` product, `multiusos.svg`, `tabuas-de-passar.svg`, `armarios-aereos.svg`)
+and the empty categories in `content/categorias.ts` in place — they're her real Facebook-album
+taxonomy (`spec-architecture.md` §1.1), not demo artifacts, and `categoriasComProdutos` /
+`categoriasDisponiveis` already filter empty categories out of both nav surfaces gracefully.
+Catalogue is now 15 products, all real, zero disclosed-illustrative content.
+
+**Still open**: all 12 supplier-sourced products (3 D'Doro + 9 Novo Horizonte) have no confirmed
+price — ships as "Consulte o preço". The cabeceira largura assumption above. Whether the
+Mônaco/Mônaco-Plus size coincidence (`docs/dados-produtos.md`) means anything.

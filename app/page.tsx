@@ -10,7 +10,6 @@ import { catalog } from "@/lib/catalog/source";
 import { categorias } from "@/content/categorias";
 import { MedidaLinha } from "@/components/produto/MedidaLinha";
 import { ProdutoCard } from "@/components/produto/ProdutoCard";
-import { AvisoIlustrativo } from "@/components/produto/AvisoIlustrativo";
 import { BotaoWhatsApp } from "@/components/orcamento/BotaoWhatsApp";
 import { NavCategorias } from "@/components/layout/NavCategorias";
 import { linkGeral } from "@/lib/whatsapp";
@@ -80,7 +79,6 @@ export default async function Home() {
         <p className="mt-1 text-eyebrow text-rosa-forte uppercase">
           {produtos.length} móveis na loja
         </p>
-        <AvisoIlustrativo />
 
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {preview.map((produto, i) => (

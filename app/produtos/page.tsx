@@ -3,7 +3,6 @@ import Link from "next/link";
 import { catalog } from "@/lib/catalog/source";
 import { categorias } from "@/content/categorias";
 import { ProdutoCard } from "@/components/produto/ProdutoCard";
-import { AvisoIlustrativo } from "@/components/produto/AvisoIlustrativo";
 import { cn } from "@/lib/cn";
 import { ogPadrao } from "@/lib/seo";
 
@@ -42,7 +41,6 @@ export default async function ProdutosPage({
         Móveis de fábrica para decorar sua casa com muita qualidade e sofisticação. Toda medida
         real, do jeito que ela chega até você.
       </p>
-      <AvisoIlustrativo />
 
       {categoriasDisponiveis.length > 1 && (
         <ul className="mt-6 flex flex-wrap gap-2" aria-label="Filtrar por categoria">

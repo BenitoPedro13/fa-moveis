@@ -10,4 +10,7 @@ export const categorias: Categoria[] = [
   { slug: "fruteiras", nome: "Fruteiras" },
   { slug: "multiusos", nome: "Multiusos" },
   { slug: "tabuas-de-passar", nome: "Tábuas de Passar" },
+  { slug: "comodas", nome: "Cômodas" },
+  { slug: "cabeceiras", nome: "Cabeceiras" },
+  { slug: "camas", nome: "Camas" },
 ];
