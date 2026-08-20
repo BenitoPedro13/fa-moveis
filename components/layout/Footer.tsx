@@ -37,6 +37,18 @@ export function Footer() {
         <p className="text-body-sm text-rosa-claro">
           © {new Date().getFullYear()} {loja.nome}. {loja.servicos}
         </p>
+
+        <p className="text-body-sm text-rosa-claro">
+          Powered by{" "}
+          <a
+            href="https://blessed-moon.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-papel"
+          >
+            Blessed Moon Studio
+          </a>
+        </p>
       </div>
     </footer>
   );

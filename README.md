@@ -5,8 +5,6 @@ measurements, no cart — every product page ends in a pre-filled WhatsApp messa
 
 **Live:** [fa-moveis.vercel.app](https://fa-moveis.vercel.app)
 
-Powered by [Blessed Moon Studio](https://blessed-moon.vercel.app)
-
 ## Status
 
 `/produtos` (category filter), the product page (gallery, breadcrumb, related products) and
