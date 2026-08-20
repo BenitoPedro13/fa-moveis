@@ -33,8 +33,11 @@ illustrative filler** (the 27-product demo catalogue from `TASK-catalogo-demo.md
 13 are real supplier stock from her printed catalogue's QR codes
 (`TASK-importar-catalogo-fabrica.md`) — 3 D'Doro roupeiros (specs scraped from the
 manufacturer's site) and 10 Novo Horizonte items (guarda-roupas, cabeceiras, 2 camas, cômodas —
-specs dictated by Benito from the physical catalogue). None have a confirmed price yet — shows
-"Consulte o preço" — pending Fátima in person. Her own 3 confirmed products (`Roupeiro Mônaco`,
+specs dictated by Benito from the physical catalogue). **10 of 13 have a confirmed price**
+(resolved 2026-08-20, `TASK-precificar-catalogo.md` — Fátima's D'Doro prices via WhatsApp,
+Benito's Novo Horizonte prices from the supplier sheet, 2× markup on frete+IPI, same shape as
+the Benetil precedent). Cama Verona (both sizes) and Cabeceira Box Himalaia still show "Consulte
+o preço". Her own 3 confirmed products (`Roupeiro Mônaco`,
 `Fruteira`, `Armário Aéreo Max`) are pulled from the site for now, not deleted — their only
 photos are unusable stills from the old Facebook video capture (`content/produtos.ts` top
 comment, `docs/dados-produtos.md`). `/produtos` (category filter), the PDP (gallery, breadcrumb,

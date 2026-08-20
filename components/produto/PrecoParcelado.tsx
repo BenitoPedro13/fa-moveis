@@ -8,9 +8,15 @@ export function PrecoParcelado({ preco }: { preco?: Preco }) {
     return <p className="font-mono text-parcela text-jacaranda">Consulte o preço</p>;
   }
 
-  // Se não tem parcelas definidas, mostra só o preço à vista
+  // Se não tem parcelas definidas, mostra o preço à vista e um aviso de que parcela também —
+  // valor exato do parcelamento fica "a combinar" até ela decidir as condições.
   if (!preco.parcelas || !preco.valorParcela) {
-    return <p className="font-mono text-parcela text-jacaranda">{formatAVista(preco.aVista)}</p>;
+    return (
+      <div>
+        <p className="font-mono text-parcela text-jacaranda">{formatAVista(preco.aVista)}</p>
+        <p className="text-body-sm text-tinta-suave">ou também parcelamos</p>
+      </div>
+    );
   }
 
   return (

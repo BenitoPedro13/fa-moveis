@@ -105,10 +105,25 @@ measurements into it.
 
 `docs/tasks/TASK-importar-catalogo-fabrica.md`. Fátima's printed catalogue has a QR code per
 item; the 12 she sent resolve to two named suppliers, confirmed by her directly. All are now in
-`content/produtos.ts` (13 entries — Cama Verona ended up split into two, see below). Prices for
-all of them are `[VERIFY]` — pending Fátima confirming in person. Her own 3 confirmed products
-are currently pulled from the site (bad Facebook-capture photos, not deleted — see
-`content/produtos.ts` top comment), so these 13 are the entire live catalogue for now.
+`content/produtos.ts` (13 entries — Cama Verona ended up split into two, see below). Her own 3
+confirmed products are currently pulled from the site (bad Facebook-capture photos, not deleted —
+see `content/produtos.ts` top comment), so these 13 are the entire live catalogue for now.
+
+**Pricing resolved 2026-08-20** (`docs/tasks/TASK-precificar-catalogo.md`) for 10 of 13: Fátima
+sent D'Doro prices directly over WhatsApp, Benito sent Novo Horizonte prices from the supplier
+sheet. Two different markup formulas, same 2× shape as the Benetil precedent
+(`content/produtos.ts` line 344–346):
+- **Novo Horizonte**: `preço com frete e IPI × 2`.
+- **D'Doro**: `(preço × 1,0325) × 2` — the 1,0325 adds Fátima's stated 3,25% IPI, since her
+  quoted prices don't include it yet.
+
+Cama Verona (solteiro/casal) and Cabeceira Box Himalaia still have no price — not in either
+pricing message, still show "Consulte o preço".
+
+`[VERIFY: "Colibri 4 portas" — R$ 749,00 base (Fátima's WhatsApp), a 4-door variant of
+roupeiro-colibri-6-portas — has no measurements, colours, or images. Not added to
+content/produtos.ts (Produto.medidas/.cores/.imagens are required fields, CLAUDE.md §0 forbids
+guessing them). Needs a supplier page or physical-catalogue dictation before it can ship.]`
 
 - **D'Doro** (`dedoromoveis.com.br`) — 3 roupeiros, full specs (measurements, colours,
   construction) scraped straight from the manufacturer's page: `roupeiro-monaco-plus-6-portas`,
